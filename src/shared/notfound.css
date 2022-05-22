@@ -9,7 +9,7 @@ body {
 }
 #notfound {
   position: relative;
-  height: 100vh;
+  height: 90vh;
 }
 #notfound .notfound {
   position: absolute;
@@ -73,10 +73,7 @@ body {
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
 }
-.notfound a:hover {
-  /* color: #f2184f; */
-  /* background: #211b19; */
-}
+
 @media only screen and (max-width: 767px) {
   .notfound .notfound-404 h1 {
     font-size: 148px;
