@@ -1,6 +1,5 @@
 import React from 'react';
 import BusinessStat from '../../shared/BusinessStat';
-import Footer from '../../shared/Footer';
 import Carousel from './Carousel';
 import FeaturedProducts from './FeaturedProducts';
 import Reviews from './Reviews';
@@ -12,7 +11,7 @@ const Home = () => {
             <FeaturedProducts/>
             <BusinessStat/>
             <Reviews/>
-            <Footer/>
+            {/* <Footer/> */}
         </div>
     );
 };
