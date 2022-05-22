@@ -28,7 +28,7 @@ const Reviews = () => {
 };
 const SingleReview = ({r}) => {
   const starts = [1,2,3,4,5]
-  console.log(r.badge);
+
   return <div className="card max-w-3xl  mt-8  mx-auto bg-base-100 shadow-xl">
   <div className="flex gap-4 flex-wrap  items-center bg-base-200 p-4">
     <div className="avatar online">

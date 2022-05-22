@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Dashboard from "./images/Dashboard";
 import About from "./pages/about/About";
-import Checkout from "./pages/checkout/Checkout";
+import Purchase from "./pages/checkout/Purchase";
 import Home from "./pages/home/Home";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
@@ -15,10 +16,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/checkout" element={<Protected><Checkout /></Protected>} />
-        <Route path="*" element={<NotFound/>}/>
+        <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
+        <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }/>
+        <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
