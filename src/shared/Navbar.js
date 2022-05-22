@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import auth from "../firebase.init";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState} from 'react-firebase-hooks/auth';
+import {  signOut } from 'firebase/auth';
+import { toast } from "react-toastify";
+
 const Navbar = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
+  if(loading) return <p>loading...</p>
+  if(error) toast.error(error.message)
+  // console.log(user);
   const menuItems = (
     <>
       <li>
@@ -20,7 +26,7 @@ const Navbar = () => {
   const profileItems = (
     <>
       <li>
-        <Link to="/profile">Sayem Khan</Link>
+        <Link to="/profile">{user?.displayName? user.displayName : 'Current User'}</Link>
       </li>
       <li>
         <Link to="/dashboard">Dashboard</Link>
@@ -29,7 +35,7 @@ const Navbar = () => {
         <Link to="/settings">Settings</Link>
       </li>
       <li>
-        <Link to="/logout">Log Out</Link>
+        <button onClick={()=>signOut(auth)}>Log Out</button>
       </li>
     </>
   );

@@ -9,6 +9,9 @@ import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
 import NotFound from "./shared/NotFound";
 import Protected from "./shared/Protected";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Register from "./pages/login/Register";
 
 function App() {
   return (
@@ -20,9 +23,11 @@ function App() {
         <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
         <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }/>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
+      <ToastContainer/>
     </div>
   );
 }

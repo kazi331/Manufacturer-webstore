@@ -12,7 +12,7 @@ const SingleProducts = ({p}) => {
         <p>Price: ${p.price}<sub> /item</sub></p>
         <h2 className=""> {p.name}</h2>
         <div className="flex flex-wrap gap-3 justify-between items-center">
-          <Link to={`purchase/${p.id}`} className="btn btn-sm btn-active text-white">Order</Link>
+          <Link to={`purchase/${p._id}`} className="btn btn-sm btn-active text-white">Order</Link>
           <div className="card-actions justify-end">
             <div className="badge badge-outline tooltip" data-tip="Min order quantity">Min: {p.min_quan}</div>
             <div className="badge badge-outline tooltip" data-tip="Available quantity">Av: {p.avail}</div>
