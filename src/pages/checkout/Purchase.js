@@ -20,7 +20,7 @@ const {name, price, img, min_quan, avail} = product;
     const total_price =  order.quantity * order.price;
     order = {...order, total_price}
     console.log(order);
-    axios.post('http://localhost/new-order', order).then(res => console.log(res))
+    axios.post('https://manufacturer-website-ks.herokuapp.com/new-order', order).then(res => console.log(res))
 
   };
   // useEffect(()=> {
@@ -29,7 +29,7 @@ const {name, price, img, min_quan, avail} = product;
   return (
     <div className="px-2">
       <h3 className="text-3xl text-center text-dark py-12 px-4">
-        Order Product
+        Order this product 
       </h3>
 
       <div className="card max-w-4xl mx-auto md:card-side bg-base-100 shadow-xl">
