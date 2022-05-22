@@ -10,7 +10,7 @@ const SingleProducts = ({p}) => {
         <p>Price: ${p.price}</p>
         <h2 className="card-title"> {p.name}</h2>
         <div className="flex flex-wrap gap-3 justify-between items-center">
-          <button className="btn btn-sm btn-active btn-primary">Buy Now</button>
+          <button className="btn btn-sm btn-active btn-success text-white">Buy Now</button>
           <div className="card-actions justify-end">
             <div className="badge badge-outline">Min: {p.min_quan}</div>
             <div className="badge badge-outline">Av: {p.avail}</div>
