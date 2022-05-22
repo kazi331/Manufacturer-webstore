@@ -1,17 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import auth from "../firebase.init";
+import { useAuthState } from 'react-firebase-hooks/auth';
 const Navbar = () => {
+  const [user] = useAuthState(auth);
   const menuItems = (
     <>
       <li>
-        <Link to="/">Home</Link>{" "}
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/about">About</Link>{" "}
+        <Link to="/about">About</Link>
       </li>
       <li>
-        <Link to="/checkout">Checkout</Link>{" "}
+        <Link to="/checkout">Checkout</Link>
       </li>
     </>
   );
@@ -67,6 +69,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
         </div>
         <div className="navbar-end">
+          {!user ? <Link className="btn btn-ghost" to="/login">Login</Link> : 
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
@@ -82,7 +85,7 @@ const Navbar = () => {
             >
               {profileItems}
             </ul>
-          </div>
+          </div>} 
         </div>
       </div>
     </div>
