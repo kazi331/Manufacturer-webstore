@@ -29,7 +29,7 @@ const {name, price, img, min_quan, avail} = product;
   return (
     <div className="px-2">
       <h3 className="text-3xl text-center text-dark py-12 px-4">
-        Order this product 
+        Order the  product 
       </h3>
 
       <div className="card max-w-4xl mx-auto md:card-side bg-base-100 shadow-xl">
