@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
-  if(loading) return <p>loading...</p>
   if(error) toast.error(error.message)
   // console.log(user);
   const menuItems = (
@@ -26,13 +25,10 @@ const Navbar = () => {
   const profileItems = (
     <>
       <li>
-        <Link to="/profile">{user?.displayName? user.displayName : 'Current User'}</Link>
+        <Link to="/dashboard/user-profile">{user?.displayName? user.displayName : 'Unknown User'}</Link>
       </li>
       <li>
         <Link to="/dashboard">Dashboard</Link>
-      </li>
-      <li>
-        <Link to="/settings">Settings</Link>
       </li>
       <li>
         <button onClick={()=>signOut(auth)}>Log Out</button>
@@ -71,10 +67,10 @@ const Navbar = () => {
           <Link className="text-2xl font-bold" to="/">SSG Corporation</Link>
         </div>
         {/* Desktop menu  */}
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar navbar-end">
           {!user ? <Link className="btn btn-ghost" to="/login">Login</Link> : 
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">

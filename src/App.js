@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./images/Dashboard";
 import About from "./pages/about/About";
 import Purchase from "./pages/checkout/Purchase";
 import Home from "./pages/home/Home";
@@ -12,6 +11,11 @@ import Protected from "./shared/Protected";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from "./pages/login/Register";
+import Dashboard from "./pages/dashboard/Dashboard";
+import MyOrders from "./pages/dashboard/MyOrders";
+import MyReviews from "./pages/dashboard/MyReviews";
+import AddReviews from "./pages/dashboard/AddReviews";
+import UserProfile from "./pages/dashboard/UserProfile";
 
 function App() {
   return (
@@ -21,7 +25,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
-        <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }/>
+        <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }> 
+          <Route index element={ <MyOrders/>} />
+          <Route path="/dashboard/my-reviews" element={ <MyReviews/>} />
+          <Route path="/dashboard/add-review" element={ <AddReviews/>} />
+          <Route path="/dashboard/user-profile" element={ <UserProfile/>} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
