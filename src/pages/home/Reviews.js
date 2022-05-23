@@ -1,4 +1,12 @@
 import React from "react";
+import "swiper/css";
+import "swiper/css/grid";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCards, EffectCreative } from "swiper";
+import "./styles.css";
+import "swiper/css/effect-creative";
+
 
 const Reviews = () => {
   const reviews = [
@@ -18,40 +26,60 @@ const Reviews = () => {
       <p className="text-center text-gray-500 mb-8 mt-2">
         Our Clients love our products
       </p>
-      <div className="px-2">
+      <div >
+      <Swiper
+        grabCursor={true}
+        effect={"cards"}
+        modules={[EffectCards]}
+        
+        creativeEffect={{
+          prev: {
+            shadow: true,
+            origin: "left center",
+            translate: ["-5%", 0, -200],
+            rotate: [0, 100, 0],
+          },
+          next: {
+            origin: "right center",
+            translate: ["5%", 0, -200],
+            rotate: [0, -100, 0],
+          },
+        }}
+        // modules={[EffectCreative]}
+        className="mySwiper max-w-3xl px-12 lg:px-24 rounded-xl p-12"
+      >
         {
-          reviews.map((r, i) => <SingleReview r={r} key={i} />)
-        }
-      </div>
+          reviews.map((r, i) =>  <SwiperSlide className="rounded-xl shadow-xl " key={i}><SingleReview r={r} key={i} /> </SwiperSlide>  )
+        }    
+        </Swiper>  
+        </div>    
+       
     </div>
   );
 };
 const SingleReview = ({r}) => {
   const starts = [1,2,3,4,5]
-
-  return <div className="card max-w-3xl  mt-8  mx-auto bg-base-100 shadow-xl">
+  return <div className="card max-w-3xl rounded-xl mx-auto shadow-xl">
   <div className="flex gap-4 flex-wrap  items-center bg-base-200 p-4">
     <div className="avatar online">
       <div className="w-12 rounded-full">
         <img
           src="https://api.lorem.space/image/face?hash=47449"
           alt=""
-        />
+          />
       </div>
     </div>
     <h4>{r.name}</h4>
     <div className="rating">
       {
         starts.map((s,i)=> <input key={i}
-          type="radio"
-          name="rating-4"
-          className="w-5 mask mask-star-2 bg-green-500"
+        type="radio"
+        name="rating-4"
+        className="w-5 mask mask-star-2 bg-green-500"
         /> )
       }
-      
-      
-    
     </div>
+
     
   </div>
   <div className="card-body">

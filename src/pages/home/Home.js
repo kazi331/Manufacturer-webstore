@@ -11,6 +11,7 @@ const Home = () => {
       <FeaturedProducts />
       <BusinessStat />
       <Reviews />
+
       {/* <Footer/> */}
     </div>
   );
