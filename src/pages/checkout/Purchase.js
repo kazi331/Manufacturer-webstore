@@ -22,17 +22,17 @@ const {name, price, img, min_quan, avail} = product;
     console.log(order);
 
     // axios.post(`http://localhost:5000/new-order`, order).then((res) => console.log(res));
+    // fetch('http://localhost:5000/neworder', {
+    //   method: 'POST', 
+    //   headers: {'content-type' : 'application.json'},
+    //   body: JSON.stringify(order)
+    // })
+    // .then(res=>  res.json())
+    // .then(data => console.log(data))
   };
 
-/* useEffect(()=> {
-  fetch('http://localhost:5000/new-order', {
-    method: 'POST', 
-    headers: {'content-type' : 'application.json'},
-    body: JSON.stringify(placeOrder())
-  })
-  .then(res=>  res.json())
-  .then(data => console.log(data))
-}, []) */
+
+
   return (
     <div className="px-2">
       <h3 className="text-3xl text-center text-dark py-12 px-4">
@@ -69,7 +69,10 @@ const {name, price, img, min_quan, avail} = product;
           </div>
           <div className="flex items-center justify-between gap-4">
             <input
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              onChange={(e) => {
+                e.preventDefault();
+                setQuantity(parseInt(e.target.value))
+              }}
               type="number"
               defaultValue={min_quan}
               placeholder="Order Quantity"
