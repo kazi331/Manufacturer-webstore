@@ -23,7 +23,7 @@ const Purchase = () => {
   const [quantity, setQuantity] = useState(parseInt(product.min_quan));
   
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => {
+  const onSubmit = (data, e) => {
     let order = { productName, quantity: quantity || min_quan, img, price, name:data.name, address: data.address, phone: data.phone, email: user.email, status: "pending"};
     const total_price = order.quantity * order.price;
     order = { ...order, total_price };
@@ -37,10 +37,18 @@ const Purchase = () => {
     .then(data => {
       console.log(data.acknowledged)
       if(data.acknowledged) toast.success('Congrates!! Order Placed SuccessFully!')
+      if(data.acknowledged){
+        e.target.reset();
+      }
     })
   };
   // if(errors) console.log(errors);
- 
+  let quantityError;
+ if(quantity < min_quan ) {
+   quantityError = `You have to order minimum ${min_quan} items. `
+  }else if( quantity > avail ){
+   quantityError = `You can order maximum ${avail} items. `
+ }
 
   return (
     <div className="px-2">
@@ -76,15 +84,13 @@ const Purchase = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4 ">
-            
-           
-          </div>
-
-      
+          
         {/* form  */}
       <div className="w-full">
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 p-4">
+        <label className="label">
+                <span className="label-text-alt text-red-400 text-sm"> {quantityError }</span>
+        </label>
         <input
               onChange={(e) => setQuantity(parseInt(e.target.value))}
               type="number"
@@ -94,11 +100,11 @@ const Purchase = () => {
              
             />
               <input   {...register("name", {required: true})}  placeholder="Name" defaultValue={user?.displayName} className="input input-bordered "  />
-             <input  {...register("address", { required: true })} placeholder="Address" type="text"  className="input input-bordered " />
+             <textarea  {...register("address", { required: true })} placeholder="Address"  className="input input-bordered " />
              <input  {...register("phone", { required: true })} placeholder="Phone" type="text"  className="input input-bordered " />
              <button
               disabled={quantity < min_quan || quantity > avail}
-              className="btn btn-secondary"
+              className="btn btn-primary"
             >
               Place Order
             </button>
