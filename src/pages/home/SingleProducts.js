@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const SingleProducts = ({p}) => {
-  console.log(p.id);
+  // console.log(p.id);
   return (
     <div className="card max-w-max mx-auto bg-base-100 shadow hover:shadow-lg">
       <figure>
