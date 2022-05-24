@@ -4,11 +4,12 @@ import Loader from "../../shared/Loader";
 import SingleProducts from "./SingleProducts";
 
 const FeaturedProducts = () => {
-  
-  const [products, setProducts] = useState([])
- useEffect(()=>{
-  axios.get('http://localhost:5000/products').then(res=> setProducts(res.data))
- },[])
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://manufacturer-website-ks.herokuapp.com/products")
+      .then((res) => setProducts(res.data));
+  }, []);
   products.length = 8;
 
   return (
@@ -18,7 +19,7 @@ const FeaturedProducts = () => {
       </h2>
       <p className="text-dark-200 text-center">Browser Our Top Products</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-12">
-        {products.length < 1 && <Loader/>} 
+        {products.length < 1 && <Loader />}
         {products?.map((p, index) => (
           <SingleProducts key={index} p={p} />
         ))}

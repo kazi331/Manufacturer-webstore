@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import About from "./pages/about/About";
-import Purchase from "./pages/checkout/Purchase";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Footer from "./shared/Footer";
@@ -15,8 +14,9 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import MyOrders from "./pages/dashboard/MyOrders";
 import AddReviews from "./pages/dashboard/AddReviews";
 import UserProfile from "./pages/dashboard/UserProfile";
-import AllProducts from "./pages/AllProducts";
 import ManageReviews from "./pages/dashboard/ManageReviews";
+import AllProducts from "./pages/AllProducts/AllProducts";
+import Purchase from "./pages/purchase/Purchase";
 
 function App() {
   return (

@@ -17,9 +17,6 @@ const navigate = useNavigate();
         <Link to="/products">All Products</Link>
       </li>
       <li>
-        <Link to="/checkout">Checkout</Link>
-      </li>
-      <li>
         <Link to="/about">About</Link>
       </li>
     </>
@@ -39,8 +36,8 @@ const navigate = useNavigate();
   );
   return (
 
-    <div className="sticky top-0 z-40 shadow ">
-      <div className="navbar bg-base-100 container mx-auto">
+    <div className="sticky top-0 z-40 shadow backdrop-blur-md backdrop-hue-rotate-30 bg-[#ffffff24]">
+      <div className="navbar container mx-auto">
         {/* Mobile DropDown menu  */}
         <div className="navbar-start">
           <div className="dropdown">

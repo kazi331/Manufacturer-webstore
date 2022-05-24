@@ -18,14 +18,13 @@ const AddReviews = () => {
       badge: ["functionality", "ease of use", "perfection"],
     };
     axios
-      .post("http://localhost:5000/review", review)
+      .post("https://manufacturer-website-ks.herokuapp.com/review", review)
       .then((res) => {
-          if(res.data.acknowledged) {
-            toast.success('Review Added Successfully!');
-            e.target.reset();
-          }
-      } ) 
-
+        if (res.data.acknowledged) {
+          toast.success("Review Added Successfully!");
+          e.target.reset();
+        }
+      });
   };
   return (
     <div className="container mx-auto my-8 px-2">
@@ -60,7 +59,7 @@ const AddReviews = () => {
             {...register("review", { required: true })}
             className="textarea textarea-primary w-full"
           ></textarea>
-           <label className="flex justify-between items-center w-full">
+          <label className="flex justify-between items-center w-full">
             <span className="label-text hidden md:block">Rating</span>
             <span></span>
           </label>
