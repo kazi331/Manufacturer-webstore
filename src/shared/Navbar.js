@@ -38,8 +38,9 @@ const navigate = useNavigate();
     </>
   );
   return (
-    <div className="">
-      <div className="navbar bg-base-100">
+
+    <div className="sticky top-0 z-40 shadow ">
+      <div className="navbar bg-base-100 container mx-auto">
         {/* Mobile DropDown menu  */}
         <div className="navbar-start">
           <div className="dropdown">

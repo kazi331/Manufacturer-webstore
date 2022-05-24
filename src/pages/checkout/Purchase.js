@@ -21,15 +21,18 @@ const Purchase = () => {
 
   const { name: productName, price, img, min_quan, avail } = product;
   const [quantity, setQuantity] = useState(parseInt(product.min_quan));
-  
-  const { register, handleSubmit } = useForm();
   const successMessage = <div>Congrates!! Order Placed SuccessFully! <Link className="text-primary" to="/dashboard"> Show All </Link></div>
-  const onSubmit = (data, e) => {
+
+
+  const { register, handleSubmit } = useForm();
+ const onSubmit = (data, e) => {
+    console.log(data);
     let order = { productName, quantity: quantity || min_quan, img, price, name:data.name, address: data.address, phone: data.phone, email: user.email, status: "pending"};
     const total_price = order.quantity * order.price;
     order = { ...order, total_price };
-    console.log(order);
-    fetch('http://localhost:5000/new-order', {
+    // console.log(order);
+
+    fetch('http://localhost:5000/neworder', {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(order),
@@ -42,7 +45,7 @@ const Purchase = () => {
         e.target.reset();
       }
     })
-  };
+  }; 
   // if(errors) console.log(errors);
   let quantityError;
  if(quantity < min_quan ) {
@@ -100,7 +103,8 @@ const Purchase = () => {
               className="input input-bordered w-full"
              
             />
-              <input   {...register("name", {required: true})}  placeholder="Name" defaultValue={user?.displayName} className="input input-bordered "  />
+              <input   {...register("name", {required: true})}  placeholder="Name" readOnly value={user?.displayName} className="input input-bordered "  />
+              <input   {...register("email", {required: true})}  placeholder="Email" readOnly value={user?.email} className="input input-bordered "  />
              <textarea  {...register("address", { required: true })} placeholder="Address"  className="input input-bordered " />
              <input  {...register("phone", { required: true })} placeholder="Phone" type="text"  className="input input-bordered " />
              <button
@@ -108,7 +112,7 @@ const Purchase = () => {
               className="btn btn-primary"
             >
               Place Order
-            </button>
+            </button> 
         </form>
       </div>
       </div>
