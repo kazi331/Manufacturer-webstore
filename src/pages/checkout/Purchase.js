@@ -26,11 +26,10 @@ const Purchase = () => {
 
   const { register, handleSubmit } = useForm();
  const onSubmit = (data, e) => {
-    console.log(data);
     let order = { productName, quantity: quantity || min_quan, img, price, name:data.name, address: data.address, phone: data.phone, email: user.email, status: "pending"};
     const total_price = order.quantity * order.price;
     order = { ...order, total_price };
-    // console.log(order);
+    console.log(order);
 
     fetch('http://localhost:5000/neworder', {
       method: "POST",
@@ -39,7 +38,6 @@ const Purchase = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data.acknowledged)
       if(data.acknowledged) toast.success(successMessage)
       if(data.acknowledged){
         e.target.reset();

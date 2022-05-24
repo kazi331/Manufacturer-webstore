@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards, EffectCreative } from "swiper";
+import { EffectCards } from "swiper";
 import "./styles.css";
 import "swiper/css/effect-creative";
+import axios from "axios";
 
 
 const Reviews = () => {
-  const reviews = [
+  const [reviews, setReviews] = useState([]);
+ /*  const reviews = [
     {name: 'Elon Mask', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'perfection']},
     {name: 'John Smith', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'quality']},
     {name: 'Dr. Samuel', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'perfection', 'quality']},
     {name: 'Darel Jodge', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
     {name: 'Donald Trump', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
     {name: 'Vladimir Putin', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
-  ]
+  ] */
+
+ useEffect(()=> {
+  axios.get('http://localhost:5000/review').then(res => setReviews(res.data))
+ }, [])
+
 
   return (
     <div>
@@ -46,10 +53,10 @@ const Reviews = () => {
           },
         }}
         // modules={[EffectCreative]}
-        className="mySwiper max-w-3xl px-12 lg:px-24 rounded-xl p-12"
+        className="mySwiper w-full max-w-3xl px-12 lg:px-24 rounded-xl p-12"
       >
         {
-          reviews.map((r, i) =>  <SwiperSlide className="rounded-xl shadow-xl " key={i}><SingleReview r={r} key={i} /> </SwiperSlide>  )
+          reviews?.map((r, i) =>  <SwiperSlide className="rounded-xl shadow-xl " key={i}><SingleReview r={r} key={i} /> </SwiperSlide>  )
         }    
         </Swiper>  
         </div>    
@@ -59,7 +66,7 @@ const Reviews = () => {
 };
 const SingleReview = ({r}) => {
   const starts = [1,2,3,4,5]
-  return <div className="card max-w-3xl rounded-xl mx-auto shadow-xl">
+  return <div className="card w-full max-w-3xl overflow-y-auto min-h-[250px] max-h-[350px] rounded-xl mx-auto shadow-xl">
   <div className="flex gap-4 flex-wrap  items-center bg-base-200 p-4">
     <div className="avatar online">
       <div className="w-12 rounded-full">
@@ -70,6 +77,7 @@ const SingleReview = ({r}) => {
       </div>
     </div>
     <h4>{r.name}</h4>
+      <div>{r.rating}</div>
     <div className="rating">
       {
         starts.map((s,i)=> <input key={i}
@@ -79,19 +87,18 @@ const SingleReview = ({r}) => {
         /> )
       }
     </div>
-
     
   </div>
-  <div className="card-body">
-   <p className="text-gray-600">
-     {r.des}
+  <div className="card-body w-full">
+   <p className="text-gray-600 text-left">
+     {r.review}
     </p>
     <div className="card-actions gap-4 justify-between items-center">
       <div className="flex gap-4 flex-wrap">
        {
-         r.badge.map((b, i)=> 
+         r.badge?.map((b, i)=> 
          <div key={i} className="badge bg-green-100 text-green-500 border-green-600 gap-1 p-3 pl-2">
-         <span className="text-2xl bg-white rounded-full w-5 h-5 flex items-center justify-center">+</span>
+         <span className="text-2xl bg-white rounded-full w-5 h-5 flex pb-1 items-center justify-center">+</span>
            {b}
        </div> )
        }

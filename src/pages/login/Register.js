@@ -114,11 +114,11 @@ useEffect(()=> {
   }
 
   return (
-    <div>
-      <h2 className="text-3xl text-center font-bold">
-        Please, login to your account{" "}
+    <div className="px-2">
+      <h2 className="text-3xl text-center font-bold mt-4">
+        Register
       </h2>
-      <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-24">
+      <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-12">
         <div className="grid p-12 card shadow-lg  place-items-center border-t-2 border-t-primary">
           {/* react hook form  */}
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 w-full">
@@ -153,8 +153,7 @@ useEffect(()=> {
             <label className="label">
               <span className="label-text">Password</span>
               <span className="label-text-alt text-red-400 text-sm">
-                {" "}
-                {errors.password && "Password is Required *"}
+                {errors.password && 'password is required *'}
               </span>
             </label>
             <input
@@ -167,8 +166,7 @@ useEffect(()=> {
             <label className="label">
               <span className="label-text">Confirm Password</span>
               <span className="label-text-alt text-red-400 text-sm">
-                {" "}
-                {errors.confirmPass && "Password is Required *"}
+                {errors.confirmPass && "ConfirmPass is Required *"}
               </span>
             </label>
             <input
@@ -186,7 +184,6 @@ useEffect(()=> {
               </span>
             </label>
             <button className="btn btn-primary w-full">
-              {" "}
               {spinner} Register
             </button>
           </form>

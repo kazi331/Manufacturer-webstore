@@ -67,7 +67,7 @@ const navigate = useNavigate();
               {menuItems}
             </ul>
           </div>
-          <Link className="text-2xl font-bold" to="/">SSG Corporation</Link>
+          <Link className="text-2xl font-bold" to="/">SSG <spa className="hidden md:inline-block">Corporation</spa></Link>
         </div>
         {/* Desktop menu  */}
         <div className="navbar navbar-end hidden lg:flex">

@@ -10,6 +10,7 @@ const Login = () => {
     const [
         emailLogin,
         user,
+        loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -20,17 +21,17 @@ const Login = () => {
   const onSubmit = data => {
       emailLogin(data.email, data.password)
     };
-
     if(error) toast.error(error.message);
   useEffect(()=>{
     if(user){
         navigate(from, { replace: true });
     }
   },[user, from, navigate]);
+
     return (
-        <div>
-            <h2 className='text-3xl text-center font-bold'>Please, login to your account </h2>
-             <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-24">
+        <div className='px-2'>
+            <h2 className='text-3xl text-center mt-4 font-bold '>Login </h2>
+             <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-12">
                 <div className="grid p-12 card shadow-lg  place-items-center border-t-2 border-t-primary">
                     {/* react hook form  */}
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 w-full">

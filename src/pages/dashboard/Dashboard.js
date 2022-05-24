@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content pt-4">
+        <div className="drawer-content pt-4 ">
           {/* <!-- Page content here --> */}
           <div className="flex items-center justify-between p-4">
             <h2 className="text-3xl text-center font-bold">Dashboard</h2>
@@ -33,7 +33,7 @@ const Dashboard = () => {
           <Outlet />
         </div>
         <div className="drawer-side">
-          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+          <label htmlFor="my-drawer-2" className="drawer-overlay">Drawer</label>
           <ul className="menu p-4 overflow-y-auto min-w-fit w-52 bg-base-100 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <li>
