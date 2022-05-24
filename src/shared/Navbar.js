@@ -70,10 +70,13 @@ const navigate = useNavigate();
           <Link className="text-2xl font-bold" to="/">SSG <spa className="hidden md:inline-block">Corporation</spa></Link>
         </div>
         {/* Desktop menu  */}
-        <div className="navbar navbar-end hidden lg:flex">
+        {/* <div className="navbar navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
-        </div>
+        </div> */}
         <div className="navbar navbar-end">
+          <div className=" hidden lg:flex">
+            <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+          </div>
           {!user ? <button disabled={loading} onClick={()=> navigate('/login')} className="btn btn-ghost" to="/login">Login</button> : 
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">

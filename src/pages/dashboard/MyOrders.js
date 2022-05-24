@@ -56,7 +56,6 @@ const MyOrders = () => {
               <tr>
                 <td colSpan="100%">
                   <p className="p-12 text-xl  flex items-center justify-center">
-                    {" "}
                     No orders found !!
                     <Link className="ml-2 link link-primary" to="/products">
                       Order Now
@@ -69,7 +68,6 @@ const MyOrders = () => {
               <tr key={index} orders={orders}>
                 <td>{index + 1}</td>
                 <td>
-                  {orders.length ? (
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
@@ -80,9 +78,6 @@ const MyOrders = () => {
                         </div>
                       </div>
                     </div>
-                  ) : (
-                    <span> No ordr found</span>
-                  )}
                 </td>
                 <td className="font-bold text-sm max-w-xs">
                   {order.productName}
@@ -92,13 +87,13 @@ const MyOrders = () => {
                 <td>${order.total_price}</td>
                 <td>{order.status}</td>
                 <td>
-                <label
+                <button
                   htmlFor="delete-modal"
                   className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
                     onClick={()=> deleteOrder(order._id)}
                 >
                   <img src={deleteIcon} alt="" />
-               </label>
+               </button>
                 </td>
               </tr>
             ))}

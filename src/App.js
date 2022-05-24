@@ -13,10 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Register from "./pages/login/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import MyOrders from "./pages/dashboard/MyOrders";
-import MyReviews from "./pages/dashboard/MyReviews";
 import AddReviews from "./pages/dashboard/AddReviews";
 import UserProfile from "./pages/dashboard/UserProfile";
 import AllProducts from "./pages/AllProducts";
+import ManageReviews from "./pages/dashboard/ManageReviews";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
         <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
         <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }> 
           <Route index element={ <MyOrders/>} />
-          <Route path="/dashboard/my-reviews" element={ <MyReviews/>} />
+          <Route path="/dashboard/reviews" element={ <ManageReviews/>} />
           <Route path="/dashboard/add-review" element={ <AddReviews/>} />
           <Route path="/dashboard/user-profile" element={ <UserProfile/>} />
         </Route>

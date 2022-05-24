@@ -33,7 +33,7 @@ const AddReviews = () => {
       <div className="container mx-auto">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-3 items-center w-full max-w-lg  py-8 mx-auto"
+          className="flex flex-col gap-3 items-center w-full max-w-lg shadow-lg p-4 rounded-xl  py-8 mx-auto"
         >
           <label className="flex justify-between items-center w-full">
             <span className="label-text hidden md:block">Your Name</span>
@@ -60,6 +60,10 @@ const AddReviews = () => {
             {...register("review", { required: true })}
             className="textarea textarea-primary w-full"
           ></textarea>
+           <label className="flex justify-between items-center w-full">
+            <span className="label-text hidden md:block">Rating</span>
+            <span></span>
+          </label>
           <select
             {...register("rating", { required: true })}
             className="select select-primary w-full"
