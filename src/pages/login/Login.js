@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -10,23 +10,23 @@ const Login = () => {
     const [
         emailLogin,
         user,
-        loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/";
 
   const onSubmit = data => {
-      console.log(data);
       emailLogin(data.email, data.password)
     };
 
     if(error) toast.error(error.message);
+  useEffect(()=>{
     if(user){
         navigate(from, { replace: true });
     }
+  },[user, from, navigate]);
     return (
         <div>
             <h2 className='text-3xl text-center font-bold'>Please, login to your account </h2>

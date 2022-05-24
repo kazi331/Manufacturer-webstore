@@ -82,7 +82,7 @@ const MyOrders = () => {
               <td>${order.total_price}</td>
               <td>{order.status}</td>
               <td>
-                  <label for="delete-confirm" className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
+                  <label htmlFor="delete-confirm" className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
                   onClick={()=> deleteOrder(order._id)} > 
                       <img src={deleteIcon} alt="" />
                   </label>

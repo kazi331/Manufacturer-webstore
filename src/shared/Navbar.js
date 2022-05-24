@@ -1,13 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../firebase.init";
 import { useAuthState} from 'react-firebase-hooks/auth';
 import {  signOut } from 'firebase/auth';
-import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const [user, loading, error] = useAuthState(auth);
-  if(error) toast.error(error.message)
+  const [user, loading] = useAuthState(auth);
+const navigate = useNavigate();
   // console.log(user);
   const menuItems = (
     <>
@@ -74,7 +73,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
         </div>
         <div className="navbar navbar-end">
-          {!user ? <Link className="btn btn-ghost" to="/login">Login</Link> : 
+          {!user ? <button disabled={loading} onClick={()=> navigate('/login')} className="btn btn-ghost" to="/login">Login</button> : 
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
