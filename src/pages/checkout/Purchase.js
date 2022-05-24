@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import auth from '../../firebase.init';
 import { useAuthState} from 'react-firebase-hooks/auth';
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ const Purchase = () => {
   const [quantity, setQuantity] = useState(parseInt(product.min_quan));
   
   const { register, handleSubmit } = useForm();
+  const successMessage = <div>Congrates!! Order Placed SuccessFully! <Link className="text-primary" to="/dashboard"> Show All </Link></div>
   const onSubmit = (data, e) => {
     let order = { productName, quantity: quantity || min_quan, img, price, name:data.name, address: data.address, phone: data.phone, email: user.email, status: "pending"};
     const total_price = order.quantity * order.price;
@@ -36,7 +37,7 @@ const Purchase = () => {
     .then(res => res.json())
     .then(data => {
       console.log(data.acknowledged)
-      if(data.acknowledged) toast.success('Congrates!! Order Placed SuccessFully!')
+      if(data.acknowledged) toast.success(successMessage)
       if(data.acknowledged){
         e.target.reset();
       }

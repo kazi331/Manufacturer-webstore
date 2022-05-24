@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import SocialLogin from '../../shared/SocialLogin';
@@ -14,13 +14,19 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || "/";
 
   const onSubmit = data => {
       console.log(data);
       emailLogin(data.email, data.password)
     };
-    if(error) toast.error(error.message);
 
+    if(error) toast.error(error.message);
+    if(user){
+        navigate(from, { replace: true });
+    }
     return (
         <div>
             <h2 className='text-3xl text-center font-bold'>Please, login to your account </h2>
@@ -29,13 +35,13 @@ const Login = () => {
                     {/* react hook form  */}
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 w-full">
                         <label className="label">
-                            <span className="label-text">What is your name?</span>
+                            <span className="label-text">Your Email</span>
                             <span className="label-text-alt text-red-400 text-sm"> {errors.email && "Email is Required *" }</span>
                         </label>
                         <input   {...register("email", {required: true})} autoComplete="Off"  placeholder="User email" defaultValue="bangladesh@gmail.com" className="input input-bordered w-full max-w-md"  />
                         
                         <label className="label">
-                            <span className="label-text">What is your name?</span>
+                            <span className="label-text">Your Password</span>
                             <span className="label-text-alt text-red-400 text-sm"> {errors.password && "Password is Required *" }</span>
                         </label>
                         <input  {...register("password", { required: true })} placeholder="Passoword" type="password" defaultValue="bangladesh" className="input input-bordered w-full max-w-md" />
