@@ -27,9 +27,7 @@ const UserProfile = () => {
       <div className="card xl:card-side bg-base-100 px-4 md:px-8 lg:px-16 py-8 lg:py-12 mx-4 my-10 lg:mx-24 border-t-2 flex items-center justify-around shadow-xl">
         <figure className="w-full max-w-sm flex flex-col gap-2">
           <img
-            src={
-              user?.photoUrl || "https://api.lorem.space/image/face?hash=33791"
-            }
+            src={user.photoURL || "https://api.lorem.space/image/face?hash=33791"}
             alt="Album"
             className="rounded-lg  aspect-square"
           />
@@ -37,7 +35,7 @@ const UserProfile = () => {
         <div className="md:card-body mt-4 md:mt-0 w-full max-w-md">
           {/* current profile info  */}
           <div className="overflow-x-auto">
-            <table className="table w-full">
+            <table className="table table-compact w-full">
               {/* <!-- head --> */}
               <thead>
                 <tr>
@@ -51,7 +49,7 @@ const UserProfile = () => {
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>{user.email} <br/> {!user.emailVerified && <button onClick={()=> verifyEmail()} className="link link-primary">Verify Email</button> } </td>
+                  <td>{user.email ? <div> {user.email} {!user.emailVerified && <button onClick={()=> verifyEmail()} className="link link-primary">Verify Email</button> }  </div> : `${user.providerData[0].providerId} doesn't share email`}</td>
                 </tr>
                 <tr>
                   <td>Phone</td>
@@ -77,9 +75,9 @@ const UserProfile = () => {
               
               </tbody>
             </table>
-              <p className="px-4"> Bio <hr/> Bio Information  </p>
+              <div className="px-2"> Bio <hr/> Bio Information <br/> </div>
           </div>
-          <a href="#update" className="link link-primary p-4">
+          <a href="#update" className="link link-primary p-2">
             Want to update profile?
           </a>
         </div>
@@ -106,7 +104,7 @@ const UserProfile = () => {
             <input
               {...register("address")}
               type="text"
-              placeholder="Address"
+              placeholder="Address - City/Town"
               className="input input-bordered w-full"
             />
             <input
@@ -128,7 +126,7 @@ const UserProfile = () => {
               className="input input-bordered w-full"
             />
             <input
-              {...register("linkedin")}
+              {...register("photoUrl")}
               type="text"
               placeholder="New profile image url"
               className="input input-bordered w-full"
