@@ -24,7 +24,7 @@ const UserProfile = () => {
       <h2 className="text-2xl text-center font-bold mb-12 capitalize hidden lg:block">
         Hey {user?.displayName}, welcome to your profile
       </h2>
-      <div className="card xl:card-side bg-base-100 px-4 lg:px-16 py-4 lg:py-12 mx-4 my-10 lg:mx-24 border-t-2 flex items-center justify-around shadow-xl">
+      <div className="card xl:card-side bg-base-100 px-4 md:px-8 lg:px-16 py-8 lg:py-12 mx-4 my-10 lg:mx-24 border-t-2 flex items-center justify-around shadow-xl">
         <figure className="w-full max-w-sm flex flex-col gap-2">
           <img
             src={
@@ -79,7 +79,7 @@ const UserProfile = () => {
             </table>
               <p className="px-4"> Bio <hr/> Bio Information  </p>
           </div>
-          <a href="#update" className="link link-primary text-center py-4">
+          <a href="#update" className="link link-primary p-4">
             Want to update profile?
           </a>
         </div>
