@@ -8,25 +8,21 @@ const ManageReviews = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     axios
-      .get("https://manufacturer-website-ks.herokuapp.com/review")
+      .get("http://localhost:5000/review")
       .then((res) => setReviews(res.data));
   }, []);
   const deleteReview = (id) => {
     const proceed = window.confirm("Are you sure?");
     if (proceed) {
-      axios
-        .delete(`https://manufacturer-website-ks.herokuapp.com/review/${id}`)
-        .then((res) => {
-          if (res.data.acknowledged) {
-            toast.info("Review Deleted");
-            axios
-              .get("https://manufacturer-website-ks.herokuapp.com/review")
-              .then((res) => {
-                setReviews(res.data);
-                console.log(res.data);
-              });
-          }
-        });
+      axios.delete(`http://localhost:5000/review/${id}`).then((res) => {
+        if (res.data.acknowledged) {
+          toast.info("Review Deleted");
+          axios.get("http://localhost:5000/review").then((res) => {
+            setReviews(res.data);
+            console.log(res.data);
+          });
+        }
+      });
     }
   };
   return (

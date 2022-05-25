@@ -15,16 +15,15 @@ const AddReviews = () => {
   const onSubmit = (data, e) => {
     const review = {
       ...data,
+      img: user.photoURL,
       badge: ["functionality", "ease of use", "perfection"],
     };
-    axios
-      .post("https://manufacturer-website-ks.herokuapp.com/review", review)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          toast.success("Review Added Successfully!");
-          e.target.reset();
-        }
-      });
+    axios.post("http://localhost:5000/review", review).then((res) => {
+      if (res.data.acknowledged) {
+        toast.success("Review Added Successfully!");
+        e.target.reset();
+      }
+    });
   };
   return (
     <div className="container mx-auto my-8 px-2">

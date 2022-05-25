@@ -6,63 +6,49 @@ import Swal from "sweetalert2";
 import auth from "../../firebase.init";
 import Delete from "../../shared/svgIcon/Delete";
 import Pay from "../../shared/svgIcon/Pay";
-// import deleteIcon from "../../images/icons/delete-bin-4-line.svg";
-// import payicon from '../../images/icons/bank-card-line.svg'
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    axios
-      .get(
-        `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`
-      )
-      .then((res) => {
-        setOrders(res.data);
-      });
+    axios.get(`http://localhost:5000/my-orders/${user?.email}`).then((res) => {
+      setOrders(res.data);
+    });
   }, [user?.email]);
 
-  const payNow = (id) =>{
-    console.log('pay now');
-  }
+  const payNow = (id) => {
+    console.log("pay now");
+  };
 
   const deleteOrder = (id) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-
-// main delete function 
-  axios
-    .delete(`https://manufacturer-website-ks.herokuapp.com/order/${id}`, {
-      method: "delete",
-    })
-    .then((res) => {
-      if (res.data.deletedCount) {
+        // main delete function
         axios
-          .get(
-            `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`
-          )
+          .delete(`http://localhost:5000/order/${id}`, {
+            method: "delete",
+          })
           .then((res) => {
-            setOrders(res.data);
+            if (res.data.deletedCount) {
+              axios
+                .get(`http://localhost:5000/my-orders/${user?.email}`)
+                .then((res) => {
+                  setOrders(res.data);
+                });
+              Swal.fire("Deleted!", "The order has been deleted.", "success");
+            }
           });
-          Swal.fire(
-            'Deleted!',
-            'The order has been deleted.',
-            'success'
-          )
       }
     });
-    }
-   })
-   
-};
+  };
 
   return (
     <div>
@@ -117,22 +103,24 @@ const MyOrders = () => {
                 <td>${order.total_price}</td>
                 <td>{order.status}</td>
                 <td>
-                 <div className="flex gap-2 items-center justify-start">
-                 <button
-                    htmlFor="delete-modal" data-tip="Pay Now"
-                    className="w-8 h-8 tooltip flex"
-                    onClick={() => payNow(order._id)}
-                  >
-                   <Pay/>
-                  </button>
-                 <button
-                    htmlFor="delete-modal" data-tip="Cancel Order"
-                    className="w-8 h-8 tooltip flex"
-                    onClick={() => deleteOrder(order._id)}
-                  >
-                   <Delete/>
-                  </button>
-                 </div>
+                  <div className="flex gap-2 items-center justify-start">
+                    <button
+                      htmlFor="delete-modal"
+                      data-tip="Pay Now"
+                      className="w-8 h-8 tooltip flex"
+                      onClick={() => payNow(order._id)}
+                    >
+                      <Pay />
+                    </button>
+                    <button
+                      htmlFor="delete-modal"
+                      data-tip="Cancel Order"
+                      className="w-8 h-8 tooltip flex"
+                      onClick={() => deleteOrder(order._id)}
+                    >
+                      <Delete />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

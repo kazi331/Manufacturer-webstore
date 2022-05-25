@@ -21,7 +21,7 @@ const Reviews = () => {
 
   useEffect(() => {
     axios
-      .get("https://manufacturer-website-ks.herokuapp.com/review")
+      .get("http://localhost:5000/review")
       .then((res) => setReviews(res.data));
   }, []);
 
@@ -71,7 +71,12 @@ const SingleReview = ({ r }) => {
       <div className="flex gap-4 flex-wrap  items-center bg-base-200 p-4">
         <div className="avatar online">
           <div className="w-12 rounded-full">
-            <img src="https://api.lorem.space/image/face?hash=47449" alt="" />
+            <img
+              src={
+                r?.img ? r.img : "https://api.lorem.space/image/face?hash=33791"
+              }
+              alt=""
+            />
           </div>
         </div>
         <h4>{r.name}</h4>

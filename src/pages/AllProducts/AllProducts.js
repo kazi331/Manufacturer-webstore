@@ -7,7 +7,7 @@ const AllProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
-      .get("https://manufacturer-website-ks.herokuapp.com/products")
+      .get("http://localhost:5000/products")
       .then((res) => setProducts(res.data));
   }, []);
   //   products.length = 8;

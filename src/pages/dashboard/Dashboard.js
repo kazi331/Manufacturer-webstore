@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-
+import { useAuthState} from 'react-firebase-hooks/auth';
+import auth from "../../firebase.init";
 const Dashboard = () => {
+  const [user] = useAuthState(auth)
   return (
     <div>
       <div className="drawer drawer-mobile">
@@ -9,7 +11,7 @@ const Dashboard = () => {
         <div className="drawer-content pt-4 ">
           {/* <!-- Page content here --> */}
           <div className="flex items-center justify-between p-4">
-            <h2 className="text-3xl text-center font-bold">Dashboard</h2>
+            <h2 className="text-3xl text-center font-bold">Welcome,  {user?.displayName}</h2>
             <label
               htmlFor="my-drawer-2"
               className="btn btn-md btn-accent drawer-button lg:hidden"
@@ -38,6 +40,9 @@ const Dashboard = () => {
             {/* <!-- Sidebar content here --> */}
             <li>
               <Link to="">My Orders</Link>
+            </li>
+            <li>
+              <Link to="orders">Manage Orders</Link>
             </li>
             <li>
               <Link to="reviews">Manage Reviews</Link>

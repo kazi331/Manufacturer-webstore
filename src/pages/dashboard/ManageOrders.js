@@ -2,37 +2,50 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import auth from "../../firebase.init";
-import deleteIcon from "../../images/icons/delete-bin-4-line.svg";
+import Delete from "../../shared/svgIcon/Delete";
+import Pay from "../../shared/svgIcon/Pay";
 
-const MyOrders = () => {
+const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    axios.get(`http://localhost:5000/my-orders/${user?.email}`).then((res) => {
+    axios.get(`http://localhost:5000/orders`).then((res) => {
       setOrders(res.data);
     });
   }, [user?.email]);
 
+  const payNow = (id) => {
+    console.log("pay now");
+  };
+
   const deleteOrder = (id) => {
-    const proceed = window.confirm("Are you sure to delete this item?");
-    if (proceed) {
-      axios
-        .delete(`http://localhost:5000/order/${id}`, {
-          method: "delete",
-        })
-        .then((res) => {
-          if (res.data.deletedCount) {
-            toast.warn("Order Deleted");
-            axios
-              .get(`http://localhost:5000/my-orders/${user?.email}`)
-              .then((res) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // main delete function
+        axios
+          .delete(`http://localhost:5000/order/${id}`, {
+            method: "delete",
+          })
+          .then((res) => {
+            if (res.data.deletedCount) {
+              axios.get(`http://localhost:5000/orders}`).then((res) => {
                 setOrders(res.data);
               });
-          }
-        });
-    }
+              Swal.fire("Deleted!", "The order has been deleted.", "success");
+            }
+          });
+      }
+    });
   };
 
   return (
@@ -45,6 +58,7 @@ const MyOrders = () => {
               <th>SL</th>
               <th>Image</th>
               <th>Product</th>
+              <th>Email</th>
               <th>U.Price</th>
               <th>Quantity</th>
               <th>T.price</th>
@@ -83,18 +97,30 @@ const MyOrders = () => {
                 <td className="font-bold text-sm max-w-xs">
                   {order.productName}
                 </td>
+                <td>{order.email}</td>
                 <td>${order.price}</td>
                 <td>{order.quantity}</td>
                 <td>${order.total_price}</td>
                 <td>{order.status}</td>
                 <td>
-                  <button
-                    htmlFor="delete-modal"
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
-                    onClick={() => deleteOrder(order._id)}
-                  >
-                    <img src={deleteIcon} alt="" />
-                  </button>
+                  <div className="flex gap-2 items-center justify-start">
+                    <button
+                      htmlFor="delete-modal"
+                      data-tip="Pay Now"
+                      className="w-8 h-8 tooltip flex"
+                      onClick={() => payNow(order._id)}
+                    >
+                      <Pay />
+                    </button>
+                    <button
+                      htmlFor="delete-modal"
+                      data-tip="Cancel Order"
+                      className="w-8 h-8 tooltip flex"
+                      onClick={() => deleteOrder(order._id)}
+                    >
+                      <Delete />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -104,6 +130,7 @@ const MyOrders = () => {
               <th>SL</th>
               <th>Image</th>
               <th>Product</th>
+              <th>Email</th>
               <th>U.Price</th>
               <th>Quantity</th>
               <th>T.Price</th>
@@ -117,4 +144,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default ManageOrders;

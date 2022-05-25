@@ -13,7 +13,7 @@ const Purchase = () => {
 
   useEffect(() => {
     axios
-      .get(`https://manufacturer-website-ks.herokuapp.com/product/${pId}`)
+      .get(`http://localhost:5000/product/${pId}`)
       .then((res) => setProduct(res.data));
   }, [pId]);
 
@@ -45,7 +45,7 @@ const Purchase = () => {
     order = { ...order, total_price };
     console.log(order);
 
-    fetch("https://manufacturer-website-ks.herokuapp.com/neworder", {
+    fetch("http://localhost:5000/neworder", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(order),
@@ -106,7 +106,6 @@ const Purchase = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 p-4">
               <label className="label">
                 <span className="label-text-alt text-red-400 text-sm">
-                  {" "}
                   {quantityError}
                 </span>
               </label>

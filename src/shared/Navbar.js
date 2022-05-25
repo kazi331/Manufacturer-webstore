@@ -36,7 +36,7 @@ const navigate = useNavigate();
   );
   return (
 
-    <div className="sticky top-0 z-40 shadow backdrop-blur-md backdrop-hue-rotate-30 bg-[#ffffff24]">
+    <div className="sticky top-0 z-40 shadow backdrop-blur-md backdrop-hue-rotate-30 bg-[#ffffffc4]">
       <div className="navbar container mx-auto">
         {/* Mobile DropDown menu  */}
         <div className="navbar-start">
@@ -79,8 +79,8 @@ const navigate = useNavigate();
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
-                  src="https://api.lorem.space/image/face?hash=33791"
-                  alt=""
+                  src={user?.photoURL? user?.photoURL: 'https://api.lorem.space/image/face?hash=33791'}
+                  alt="photoURL"
                 />
               </div>
             </label>
