@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import auth from "../../firebase.init";
+import Loader from "../../shared/Loader";
 import Delete from "../../shared/svgIcon/Delete";
 import Pay from "../../shared/svgIcon/Pay";
 
 const MyOrders = () => {
-  const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
-  useEffect(() => {
-    fetch(`http://localhost:5000/my-orders/${user?.email}`, {
-      method: 'GET', 
-      headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
-    }).then((res) => res.json())
-    .then(data => setOrders(data));
-  }, [user?.email]);
+  const {data: orders, isLoading, error, refetch} = useQuery('available', ()=> fetch(`http://localhost:5000/my-orders/${user?.email}`, {
+        method: 'GET', 
+        headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
+      }).then((res) => res.json()) )
+if(isLoading) return <Loader/>
+if(error) console.log(error);
 
   const payNow = (id) => {
     console.log("pay now");
@@ -39,12 +39,7 @@ const MyOrders = () => {
           .then(data=>{
               Swal.fire("Deleted!", "The order has been deleted.", "success");
               if(data.deletedCount){
-                fetch(`http://localhost:5000/my-orders/${user?.email}`, {
-                  method: 'GET', 
-                  headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
-                })
-                .then(res=> res.json() )
-                .then(data => setOrders(data))
+                refetch();
               }
           })
       }
@@ -69,7 +64,7 @@ const MyOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.length < 1 && (
+            {orders?.length < 1 && (
               <tr>
                 <td colSpan="100%">
                   <p className="p-12 text-xl  flex items-center justify-center">
@@ -81,7 +76,7 @@ const MyOrders = () => {
                 </td>
               </tr>
             )}
-            {orders.map((order, index) => (
+            {orders?.map((order, index) => (
               <tr key={index} orders={orders}>
                 <td>{index + 1}</td>
                 <td>

@@ -22,10 +22,14 @@ const Register = () => {
   const navigate = useNavigate();
   const [token] = useToken(user); 
   // submit process ................
+  
   const onSubmit = async (data) => {
+    if (data.password !== data.confirmPass){
+     toast.error('Passoword doesn\'t mach!')
+    }else{
       await createEmailUser(data.email, data.password);
       await updateProfile({displayName: data.name})
-      // console.log(data);
+    }
   };
 
   if(error || updateError ) {
