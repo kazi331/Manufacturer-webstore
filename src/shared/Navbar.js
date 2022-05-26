@@ -17,7 +17,7 @@ const navigate = useNavigate();
         <Link to="/products">All Products</Link>
       </li>
       <li>
-        <Link to="/portfolio">Learn Me</Link>
+        <Link to="/portfolio">Me</Link>
       </li>
     </>
   );

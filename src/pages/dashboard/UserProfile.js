@@ -44,7 +44,6 @@ const UserProfile = () => {
     facebook,
     linkedin,
     photoUrl,
-    phone,
     profileName,
   } = profile;
 
@@ -211,13 +210,6 @@ const UserProfile = () => {
               {...register("linkedin", { required: true })}
               type="text"
               placeholder="Linkedin Profile url"
-              className="input input-bordered w-full"
-            />
-            <input
-              defaultValue={phone}
-              {...register("phone", { required: true })}
-              type="number"
-              placeholder="Phone Number"
               className="input input-bordered w-full"
             />
             <input

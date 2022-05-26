@@ -17,8 +17,7 @@ const Users = () => {
       },
     }).then((res) => res.json())
   );
-  if (isLoading) return <Loader />;
-  if (error) console.log(error);
+ 
   const makeAdmin = (email) => {
     Swal.fire({
       title: "Confirm Making this user an Admin?",
@@ -75,6 +74,9 @@ const Users = () => {
       }
     });
   };
+if(isLoading) return <Loader/>
+if(error) console.log(error);
+  
   return (
     <div>
       <h3 className="text-center text-3xl mb-4">
