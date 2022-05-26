@@ -1,15 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import useGetProducts from "../../hooks/useGetProducts";
 import Loader from "../../shared/Loader";
 import SingleProducts from "../home/SingleProducts";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/products")
-      .then((res) => setProducts(res.data));
-  }, []);
+ const [products] = useGetProducts();
   //   products.length = 8;
   if (products.length < 1) {
     return (

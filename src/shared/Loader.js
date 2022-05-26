@@ -70,5 +70,4 @@ const Loader = () => {
     </svg>
   );
 };
-
 export default Loader;

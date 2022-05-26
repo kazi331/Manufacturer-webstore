@@ -1,30 +1,24 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import React from "react";
 import { EffectCards } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-creative";
 import "swiper/css/grid";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useReviews from "../../hooks/useReviews";
+import Loader from "../../shared/Loader";
 import "./styles.css";
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState([]);
-  /*  const reviews = [
-    {name: 'Elon Mask', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'perfection']},
-    {name: 'John Smith', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'quality']},
-    {name: 'Dr. Samuel', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality', 'ease of use', 'perfection', 'quality']},
-    {name: 'Darel Jodge', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
-    {name: 'Donald Trump', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
-    {name: 'Vladimir Putin', rating: 4.6, des: 'I haretra neque non mi aliquam, finibus hart bibendum molestie. Vestibulum suscipit sagittis dignissim mauris.', time: 2, badge: ['functionality',  'perfection', 'quality']},
-  ] */
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/review")
-      .then((res) => setReviews(res.data));
-  }, []);
-
+ const [reviews] = useReviews();
+  if (reviews.length < 1) {
+    return (
+      <div className="flex items-center justify-center ">
+        <Loader  />
+      </div>
+    );
+  }
   return (
     <div>
       <h2 className="text-3xl text-center font-bold mt-24">

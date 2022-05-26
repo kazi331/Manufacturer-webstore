@@ -7,37 +7,36 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 import SocialLogin from "../../shared/SocialLogin";
 
 const Register = () => {
   const [createEmailUser, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile, updating] = useUpdateProfile(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const [token] = useToken(user); 
+  // submit process ................
   const onSubmit = async (data) => {
-    if (data.password !== data.confirmPass)
-      toast.warning("Passoword doesn't match ");
-    else {
       await createEmailUser(data.email, data.password);
-      await updateProfile({ displayName: data.name });
-      
-    }
+      await updateProfile({displayName: data.name})
+      // console.log(data);
   };
 
-  if(error ) {
-    toast.error(error?.message);
+  if(error || updateError ) {
+    toast.error(error?.message || updateError?.message);
   }
 
 useEffect(()=> {
-  if(user) {
-    navigate("/");
+  if(token && !updating) {
+    navigate("/dashboard");
   }
-}, [user, navigate])
+}, [token, navigate, updating])
 
   let spinner = "";
   if (loading || updating) {
@@ -125,12 +124,16 @@ useEffect(()=> {
             <label className="label">
               <span className="label-text">Your Name</span>
               <span className="label-text-alt text-red-400 text-sm">
-                {" "}
-                {errors.name && "Name is Required *"}
+              {errors.name && "Name is Required *"}
               </span>
             </label>
             <input
-              {...register("name", { required: true })}
+              {...register("name", {
+                required: {
+                  value: true,
+                  message: "Name is required",
+                },
+              })}
               type="text"
               placeholder="Your Name"
               className="input input-bordered w-full max-w-md"

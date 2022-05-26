@@ -1,14 +1,22 @@
 import React from "react";
-import { useAuthState, useSendEmailVerification } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useSendEmailVerification,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
 const UserProfile = () => {
   const [user] = useAuthState(auth);
-  console.log(user);
   const [verifyEmail, sending, error] = useSendEmailVerification(auth);
-  if(sending) toast.info('check your email')
+  const emailVerify = async() => {
+    verifyEmail()
+    if (sending) await toast.info('Check Your Email')
+    if (error) await toast.error(error.message)
+  }
+  
+
   const {
     register,
     handleSubmit,
@@ -19,6 +27,11 @@ const UserProfile = () => {
     console.log(data);
   };
 
+  let newEmail;
+  if (!user.email || !user.emailVerified) {
+    newEmail = true;
+  }
+
   return (
     <div className="container mt-20">
       <h2 className="text-2xl text-center font-bold mb-12 capitalize hidden lg:block">
@@ -27,7 +40,9 @@ const UserProfile = () => {
       <div className="card xl:card-side bg-base-100 px-4 md:px-8 lg:px-16 py-8 lg:py-12 mx-4 my-10 lg:mx-24 border-t-2 flex items-center justify-around shadow-xl">
         <figure className="w-full max-w-sm flex flex-col gap-2">
           <img
-            src={user.photoURL || "https://api.lorem.space/image/face?hash=33791"}
+            src={
+              user.photoURL || "https://api.lorem.space/image/face?hash=33791"
+            }
             alt="Album"
             className="rounded-lg  aspect-square"
           />
@@ -49,11 +64,28 @@ const UserProfile = () => {
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>{user.email ? <div> {user.email} {!user.emailVerified && <button onClick={()=> verifyEmail()} className="link link-primary">Verify Email</button> }  </div> : `${user.providerData[0].providerId} doesn't share email`}</td>
+                  <td>
+                    {user.email ? (
+                      <div>
+                        {" "}
+                        {user.email}{" "}
+                        {!user.emailVerified && (
+                          <button
+                            onClick={emailVerify}
+                            className="link link-primary"
+                          >
+                            Verify Email
+                          </button>
+                        )}{" "}
+                      </div>
+                    ) : (
+                      `${user.providerData[0].providerId} doesn't share email`
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <td>Phone</td>
-                  <td>{user.phoneNumber || 'Number Not Found'}</td>
+                  <td>{user.phoneNumber || "Number Not Found"}</td>
                 </tr>
                 <tr>
                   <td>LinkedIn</td>
@@ -71,11 +103,12 @@ const UserProfile = () => {
                   <td>Education</td>
                   <td>Education</td>
                 </tr>
-                
-              
               </tbody>
             </table>
-              <div className="px-2"> Bio <hr/> Bio Information <br/> </div>
+            <div className="px-2">
+              {" "}
+              Bio <hr /> Bio Information <br />{" "}
+            </div>
           </div>
           <a href="#update" className="link link-primary p-2">
             Want to update profile?
@@ -101,6 +134,15 @@ const UserProfile = () => {
               placeholder="Profile Name"
               className="input input-bordered w-full"
             />
+            {newEmail && (
+              <input
+                {...register("email", { required: true })}
+                type="email"
+                placeholder="Email Address"
+                className="input input-bordered w-full"
+              />
+            )}
+
             <input
               {...register("address")}
               type="text"

@@ -30,7 +30,11 @@ const navigate = useNavigate();
         <Link to="/dashboard">Dashboard</Link>
       </li>
       <li>
-        <button onClick={()=>signOut(auth)}>Log Out</button>
+        <button onClick={()=>{
+          signOut(auth);
+          localStorage.removeItem('access_token');
+          navigate('/login')
+        }}>Log Out</button>
       </li>
     </>
   );
@@ -64,7 +68,7 @@ const navigate = useNavigate();
               {menuItems}
             </ul>
           </div>
-          <Link className="text-2xl font-bold" to="/">SSG <spa className="hidden md:inline-block">Corporation</spa></Link>
+          <Link className="text-2xl font-bold" to="/">SSG <span className="hidden md:inline-block">Corporation</span></Link>
         </div>
         {/* Desktop menu  */}
         {/* <div className="navbar navbar-end hidden lg:flex">

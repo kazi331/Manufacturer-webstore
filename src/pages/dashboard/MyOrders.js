@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
@@ -11,9 +10,11 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    axios.get(`http://localhost:5000/my-orders/${user?.email}`).then((res) => {
-      setOrders(res.data);
-    });
+    fetch(`http://localhost:5000/my-orders/${user?.email}`, {
+      method: 'GET', 
+      headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
+    }).then((res) => res.json())
+    .then(data => setOrders(data));
   }, [user?.email]);
 
   const payNow = (id) => {
@@ -32,20 +33,20 @@ const MyOrders = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // main delete function
-        axios
-          .delete(`http://localhost:5000/order/${id}`, {
-            method: "delete",
-          })
-          .then((res) => {
-            if (res.data.deletedCount) {
-              axios
-                .get(`http://localhost:5000/my-orders/${user?.email}`)
-                .then((res) => {
-                  setOrders(res.data);
-                });
+        
+        fetch(`http://localhost:5000/order/${id}`, {method: 'DELETE'})
+          .then((res) => res.json())
+          .then(data=>{
               Swal.fire("Deleted!", "The order has been deleted.", "success");
-            }
-          });
+              if(data.deletedCount){
+                fetch(`http://localhost:5000/my-orders/${user?.email}`, {
+                  method: 'GET', 
+                  headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
+                })
+                .then(res=> res.json() )
+                .then(data => setOrders(data))
+              }
+          })
       }
     });
   };

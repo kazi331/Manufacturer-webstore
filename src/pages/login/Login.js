@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import SocialLogin from '../../shared/SocialLogin';
 
 const Login = () => {
@@ -12,22 +13,95 @@ const Login = () => {
         user,
         loading,
         error,
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [token] = useToken(user )
     const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/dashboard";
 
   const onSubmit = data => {
       emailLogin(data.email, data.password)
     };
     if(error) toast.error(error.message);
   useEffect(()=>{
-    if(user){
+    if(token && !loading){
         navigate(from, { replace: true });
     }
-  },[user, from, navigate]);
-
+  },[token,loading, from, navigate]);
+  let spinner = "";
+  if (loading) {
+    spinner = (
+      <div className=" flex items-center justify-center w-12 h-12">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xlink="http://www.w3.org/1999/xlink"
+          width="200px"
+          height="200px"
+          viewBox="0 0 100 100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="0"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="2"
+          >
+            <animate
+              attributeName="r"
+              repeatCount="indefinite"
+              dur="1s"
+              values="0;40"
+              keyTimes="0;1"
+              keySplines="0 0.2 0.8 1"
+              calcMode="spline"
+              begin="0s"
+            ></animate>
+            <animate
+              attributeName="opacity"
+              repeatCount="indefinite"
+              dur="1s"
+              values="1;0"
+              keyTimes="0;1"
+              keySplines="0.2 0 0.8 1"
+              calcMode="spline"
+              begin="0s"
+            ></animate>
+          </circle>
+          <circle
+            cx="50"
+            cy="50"
+            r="0"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="2"
+          >
+            <animate
+              attributeName="r"
+              repeatCount="indefinite"
+              dur="1s"
+              values="0;40"
+              keyTimes="0;1"
+              keySplines="0 0.2 0.8 1"
+              calcMode="spline"
+              begin="-0.5s"
+            ></animate>
+            <animate
+              attributeName="opacity"
+              repeatCount="indefinite"
+              dur="1s"
+              values="1;0"
+              keyTimes="0;1"
+              keySplines="0.2 0 0.8 1"
+              calcMode="spline"
+              begin="-0.5s"
+            ></animate>
+          </circle>
+        </svg>
+      </div>
+    );
+  }
     return (
         <div className='px-2'>
             <h2 className='text-3xl text-center mt-4 font-bold '>Login </h2>
@@ -50,7 +124,7 @@ const Login = () => {
                             <span className="label-text">Don't have an account? <Link  className='link link-primary'to="/register">Register</Link></span>
                             <span className="label-text">Forgot Password? <Link className='link link-primary' to="/reset">Reset</Link></span>
                         </label>
-                        <input type="submit" value="Login" className='btn btn-primary w-full'/>
+                        <button value="Login" className='btn btn-primary w-full'>{loading && spinner} Login </button>
                     </form>
                 </div>
                 <div className="divider">Or, continue with</div>

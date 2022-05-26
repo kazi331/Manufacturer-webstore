@@ -38,7 +38,7 @@ const Purchase = () => {
       name: data.name,
       address: data.address,
       phone: data.phone,
-      email: user.email,
+      email: user.email || data.email,
       status: "pending",
     };
     const total_price = order.quantity * order.price;
@@ -125,9 +125,9 @@ const Purchase = () => {
               />
               <input
                 {...register("email", { required: true })}
-                placeholder="Email"
-                readOnly
-                value={user?.email}
+                placeholder="Email" type='email'
+                readOnly={user.email}
+                defaultValue={user.email}
                 className="input input-bordered "
               />
               <textarea
