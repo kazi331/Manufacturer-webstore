@@ -7,16 +7,17 @@ import deleteicon from "../../images/icons/delete-bin-4-line.svg";
 
 const ManageReviews = () => {
   const [reviews] = useReviews();
-  
+
   const deleteReview = (id) => {
     const proceed = window.confirm("Are you sure?");
     if (proceed) {
-      axios.delete(`http://localhost:5000/review/${id}`).then((res) => {
-        if (res.data.acknowledged) {
-          toast.info("Review Deleted");
-
-        }
-      });
+      axios
+        .delete(`https://manufacturer-website-ks.herokuapp.com/review/${id}`)
+        .then((res) => {
+          if (res.data.acknowledged) {
+            toast.info("Review Deleted");
+          }
+        });
     }
   };
   return (

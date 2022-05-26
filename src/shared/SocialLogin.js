@@ -27,9 +27,9 @@ const SocialLogin = () => {
    }, [token, gitUser, from , navigate]);
   return (
     <div className="flex gap-4 justify-around">
-      <button onClick={()=> google()} className="px-8 py-2 rounded-full hover:bg-white border-2 border-white"><img src={gicon} alt="" /></button>
-      <button onClick={()=> github()} className="px-8 py-2 rounded-full hover:bg-white border-2 border-white"><img src={giticon} alt="" /></button>
-      <button disabled onClick={()=> fb()} className="px-8 py-2 rounded-full hover:bg-white border-2 border-white"><img src={fbicon} alt="" /></button>
+      <button onClick={()=> google()} className="px-8 py-2 rounded-full hover:bg-white border-1 border-white"><img src={gicon} alt="" /></button>
+      <button onClick={()=> github()} disabled data-tip="Disabled" className="tooltip px-8 py-2 rounded-full hover:bg-white border-1 border-white"><img src={giticon} alt="" /></button>
+      <button onClick={()=> fb()} disabled data-tip="Disabled" className="tooltip px-8 py-2 rounded-full hover:bg-white border-1 border-white"><img src={fbicon} alt="" /></button>
     </div>
   );
 };

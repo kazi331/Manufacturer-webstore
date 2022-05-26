@@ -4,28 +4,70 @@ import {
   useSendEmailVerification,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
+import Loader from "../../shared/Loader";
 
 const UserProfile = () => {
   const [user] = useAuthState(auth);
   const [verifyEmail, sending, error] = useSendEmailVerification(auth);
-  const emailVerify = async() => {
-    verifyEmail()
-    if (sending) await toast.info('Check Your Email')
-    if (error) await toast.error(error.message)
-  }
-  
-
+  const emailVerify = async () => {
+    verifyEmail();
+    if (sending) await toast.info("Check Your Email");
+    if (error) await toast.error(error.message);
+  };
+  // const [updating, setUpdating] = useState(true);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+  // const [profile, setProfile] = useState({});
+
+  //  get profile
+  const {
+    data: profile,
+    isLoading,
+    refetch,
+  } = useQuery("profile", () =>
+    fetch(
+      `https://manufacturer-website-ks.herokuapp.com/user/${user?.email}`
+    ).then((res) => res.json())
+  );
+  if (isLoading) return <Loader />;
+  const {
+    address,
+    bio,
+    education,
+    facebook,
+    linkedin,
+    photoUrl,
+    phone,
+    profileName,
+  } = profile;
+
   const onSubmit = (data) => {
     console.log(data);
+    fetch(
+      `https://manufacturer-website-ks.herokuapp.com/update/${user?.email}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) refetch();
+      });
   };
+  // setUpdating(false)
 
   let newEmail;
   if (!user.email || !user.emailVerified) {
@@ -60,14 +102,13 @@ const UserProfile = () => {
               <tbody>
                 <tr>
                   <td>Name</td>
-                  <td>{user.displayName}</td>
+                  <td>{profileName || user.displayName}</td>
                 </tr>
                 <tr>
                   <td>Email</td>
                   <td>
                     {user.email ? (
                       <div>
-                        {" "}
                         {user.email}{" "}
                         {!user.emailVerified && (
                           <button
@@ -89,25 +130,26 @@ const UserProfile = () => {
                 </tr>
                 <tr>
                   <td>LinkedIn</td>
-                  <td>LinkedIn link</td>
+                  <td>{linkedin}</td>
                 </tr>
                 <tr>
                   <td>Facebook</td>
-                  <td>facebook link</td>
+                  <td>{facebook}</td>
                 </tr>
                 <tr>
                   <td>Address</td>
-                  <td>Address</td>
+                  <td>{address}</td>
                 </tr>
                 <tr>
                   <td>Education</td>
-                  <td>Education</td>
+                  <td>{education}</td>
                 </tr>
               </tbody>
             </table>
             <div className="px-2">
               {" "}
-              Bio <hr /> Bio Information <br />{" "}
+              Bio <hr /> {bio}
+              <br />{" "}
             </div>
           </div>
           <a href="#update" className="link link-primary p-2">
@@ -129,52 +171,65 @@ const UserProfile = () => {
             </h2>
             <input
               defaultValue={user.displayName}
-              {...register("profileName")}
+              {...register("profileName", { required: true })}
               type="text"
               placeholder="Profile Name"
               className="input input-bordered w-full"
             />
-            {newEmail && (
+            {/* {newEmail && (
               <input
-                {...register("email", { required: true })}
+                {...register("email")}
                 type="email"
                 placeholder="Email Address"
                 className="input input-bordered w-full"
               />
-            )}
+            )} */}
 
             <input
-              {...register("address")}
+              defaultValue={address}
+              {...register("address", { required: true })}
               type="text"
               placeholder="Address - City/Town"
               className="input input-bordered w-full"
             />
             <input
-              {...register("education")}
+              defaultValue={education}
+              {...register("education", { required: true })}
               type="text"
               placeholder="Your Education"
               className="input input-bordered w-full"
             />
             <input
-              {...register("facebook")}
+              defaultValue={facebook}
+              {...register("facebook", { required: true })}
               type="text"
               placeholder="Facebook Profile url"
               className="input input-bordered w-full"
             />
             <input
-              {...register("linkedin")}
+              defaultValue={linkedin}
+              {...register("linkedin", { required: true })}
               type="text"
               placeholder="Linkedin Profile url"
               className="input input-bordered w-full"
             />
             <input
-              {...register("photoUrl")}
+              defaultValue={phone}
+              {...register("phone", { required: true })}
+              type="number"
+              placeholder="Phone Number"
+              className="input input-bordered w-full"
+            />
+            <input
+              defaultValue={photoUrl}
+              {...register("photoUrl", { required: true })}
               type="text"
               placeholder="New profile image url"
               className="input input-bordered w-full"
             />
             <textarea
-              {...register("bio")}
+              defaultValue={bio}
+              {...register("bio", { required: true })}
               className="textarea textarea-bordered w-full"
               placeholder="Bio"
             ></textarea>

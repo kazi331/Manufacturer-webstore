@@ -13,7 +13,7 @@ const Purchase = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/product/${pId}`)
+      .get(`https://manufacturer-website-ks.herokuapp.com/product/${pId}`)
       .then((res) => setProduct(res.data));
   }, [pId]);
 
@@ -45,7 +45,7 @@ const Purchase = () => {
     order = { ...order, total_price };
     console.log(order);
 
-    fetch("http://localhost:5000/neworder", {
+    fetch("https://manufacturer-website-ks.herokuapp.com/neworder", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(order),
@@ -125,7 +125,8 @@ const Purchase = () => {
               />
               <input
                 {...register("email", { required: true })}
-                placeholder="Email" type='email'
+                placeholder="Email"
+                type="email"
                 readOnly={user.email}
                 defaultValue={user.email}
                 className="input input-bordered "

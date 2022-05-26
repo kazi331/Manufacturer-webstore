@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
-import Loader from '../../shared/Loader'
+import Loader from "../../shared/Loader";
 
 const Users = () => {
-  // const [users, setUsers] = useState([]);
-
-    const {data:users, isLoading, refetch , error} = useQuery('users', ()=> fetch("http://localhost:5000/users", {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        })
-          .then((res) => res.json()) )
-if(isLoading) return <Loader/>
+  const {
+    data: users,
+    isLoading,
+    refetch,
+    error,
+  } = useQuery("users", () =>
+    fetch("https://manufacturer-website-ks.herokuapp.com/users", {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }).then((res) => res.json())
+  );
+  if (isLoading) return <Loader />;
+  if (error) console.log(error);
   const makeAdmin = (email) => {
     Swal.fire({
       title: "Confirm Making this user an Admin?",
@@ -27,7 +32,7 @@ if(isLoading) return <Loader/>
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/admin/${email}`, {
+        fetch(`https://manufacturer-website-ks.herokuapp.com/admin/${email}`, {
           method: "PUT",
           headers: {
             authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -37,8 +42,8 @@ if(isLoading) return <Loader/>
           .then((data) => {
             console.log(data);
             Swal.fire("User is now an Admin", "", "success");
-            if(data.modifiedCount){
-            refetch();
+            if (data.modifiedCount) {
+              refetch();
             }
           });
       }
@@ -58,7 +63,9 @@ if(isLoading) return <Loader/>
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/user/${id}`, { method: "Delete" })
+        fetch(`https://manufacturer-website-ks.herokuapp.com/user/${id}`, {
+          method: "Delete",
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);

@@ -10,12 +10,24 @@ import Pay from "../../shared/svgIcon/Pay";
 
 const MyOrders = () => {
   const [user] = useAuthState(auth);
-  const {data: orders, isLoading, error, refetch} = useQuery('available', ()=> fetch(`http://localhost:5000/my-orders/${user?.email}`, {
-        method: 'GET', 
-        headers: {'authorization': `Bearer ${localStorage.getItem('access_token')}`}
-      }).then((res) => res.json()) )
-if(isLoading) return <Loader/>
-if(error) console.log(error);
+  const {
+    data: orders,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery("available", () =>
+    fetch(
+      `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    ).then((res) => res.json())
+  );
+  if (isLoading) return <Loader />;
+  if (error) console.log(error);
 
   const payNow = (id) => {
     console.log("pay now");
@@ -33,15 +45,17 @@ if(error) console.log(error);
     }).then((result) => {
       if (result.isConfirmed) {
         // main delete function
-        
-        fetch(`http://localhost:5000/order/${id}`, {method: 'DELETE'})
+
+        fetch(`https://manufacturer-website-ks.herokuapp.com/order/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
-          .then(data=>{
-              Swal.fire("Deleted!", "The order has been deleted.", "success");
-              if(data.deletedCount){
-                refetch();
-              }
-          })
+          .then((data) => {
+            Swal.fire("Deleted!", "The order has been deleted.", "success");
+            if (data.deletedCount) {
+              refetch();
+            }
+          });
       }
     });
   };

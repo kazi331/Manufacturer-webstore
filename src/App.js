@@ -19,6 +19,7 @@ import AllProducts from "./pages/AllProducts/AllProducts";
 import Purchase from "./pages/purchase/Purchase";
 import ManageOrders from "./pages/dashboard/ManageOrders";
 import Users from "./pages/dashboard/Users";
+import Portfolio from "./pages/portfolio/Portfolio";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<AllProducts />} />
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
         <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }> 
           <Route index element={ <MyOrders/>} />

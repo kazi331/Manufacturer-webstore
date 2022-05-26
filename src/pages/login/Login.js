@@ -128,7 +128,7 @@ const Login = () => {
                     </form>
                 </div>
                 <div className="divider">Or, continue with</div>
-                <div className="grid h-20 card bg-gray-200 rounded-box place-items-center">
+                <div className="grid h-28 card bg-gray-200 rounded-box place-items-center">
                     <SocialLogin/>
                 </div>
              </div>

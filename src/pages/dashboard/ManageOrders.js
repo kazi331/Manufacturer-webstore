@@ -11,9 +11,11 @@ const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    axios.get(`http://localhost:5000/orders`).then((res) => {
-      setOrders(res.data);
-    });
+    axios
+      .get(`https://manufacturer-website-ks.herokuapp.com/orders`)
+      .then((res) => {
+        setOrders(res.data);
+      });
   }, [user?.email]);
 
   const payNow = (id) => {
@@ -33,14 +35,16 @@ const ManageOrders = () => {
       if (result.isConfirmed) {
         // main delete function
         axios
-          .delete(`http://localhost:5000/order/${id}`, {
+          .delete(`https://manufacturer-website-ks.herokuapp.com/order/${id}`, {
             method: "delete",
           })
           .then((res) => {
             if (res.data.deletedCount) {
-              axios.get(`http://localhost:5000/orders}`).then((res) => {
-                setOrders(res.data);
-              });
+              axios
+                .get(`https://manufacturer-website-ks.herokuapp.com/orders}`)
+                .then((res) => {
+                  setOrders(res.data);
+                });
               Swal.fire("Deleted!", "The order has been deleted.", "success");
             }
           });
