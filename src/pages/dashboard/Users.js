@@ -44,7 +44,8 @@ const Users = () => {
             if (data.modifiedCount) {
               refetch();
             }
-          });
+          }
+          );
       }
     });
   };

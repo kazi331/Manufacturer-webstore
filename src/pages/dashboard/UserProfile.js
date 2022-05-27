@@ -20,9 +20,7 @@ const UserProfile = () => {
   // const [updating, setUpdating] = useState(true);
   const {
     register,
-    handleSubmit,
-    watch,
-    formState: { errors },
+    handleSubmit
   } = useForm();
   // const [profile, setProfile] = useState({});
 
@@ -43,7 +41,6 @@ const UserProfile = () => {
     education,
     facebook,
     linkedin,
-    photoUrl,
     profileName,
   } = profile;
 
@@ -66,12 +63,12 @@ const UserProfile = () => {
         if (data.acknowledged) refetch();
       });
   };
-  // setUpdating(false)
 
-  let newEmail;
-  if (!user.email || !user.emailVerified) {
-    newEmail = true;
-  }
+
+  // let newEmail;
+  // if (!user.email || !user.emailVerified) {
+  //   newEmail = true;
+  // }
 
   return (
     <div className="container mt-20">
@@ -146,9 +143,8 @@ const UserProfile = () => {
               </tbody>
             </table>
             <div className="px-2">
-              {" "}
               Bio <hr /> {bio}
-              <br />{" "}
+              <br />
             </div>
           </div>
           <a href="#update" className="link link-primary p-2">
@@ -169,7 +165,6 @@ const UserProfile = () => {
               Update Your Profile
             </h2>
             <input
-              defaultValue={user.displayName}
               {...register("profileName", { required: true })}
               type="text"
               placeholder="Profile Name"
@@ -185,42 +180,36 @@ const UserProfile = () => {
             )} */}
 
             <input
-              defaultValue={address}
               {...register("address", { required: true })}
               type="text"
               placeholder="Address - City/Town"
               className="input input-bordered w-full"
             />
             <input
-              defaultValue={education}
               {...register("education", { required: true })}
               type="text"
               placeholder="Your Education"
               className="input input-bordered w-full"
             />
             <input
-              defaultValue={facebook}
               {...register("facebook", { required: true })}
               type="text"
               placeholder="Facebook Profile url"
               className="input input-bordered w-full"
             />
             <input
-              defaultValue={linkedin}
               {...register("linkedin", { required: true })}
               type="text"
               placeholder="Linkedin Profile url"
               className="input input-bordered w-full"
             />
             <input
-              defaultValue={photoUrl}
               {...register("photoUrl", { required: true })}
               type="text"
               placeholder="New profile image url"
               className="input input-bordered w-full"
             />
             <textarea
-              defaultValue={bio}
               {...register("bio", { required: true })}
               className="textarea textarea-bordered w-full"
               placeholder="Bio"

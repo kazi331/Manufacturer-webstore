@@ -17,7 +17,7 @@ const Purchase = () => {
       .then((res) => setProduct(res.data));
   }, [pId]);
 
-  const { name: productName, price, img, min_quan, avail } = product;
+  const { name: productName, price, img, min_quan, avail ,des} = product;
   const [quantity, setQuantity] = useState(parseInt(product.min_quan));
   const successMessage = (
     <div>
@@ -68,17 +68,20 @@ const Purchase = () => {
 
   return (
     <div className="px-2">
-      <h3 className="text-3xl text-center text-dark py-12 px-4">
-        Order the product
+      <h3 className="text-lg md:text-3xl text-center text-dark py-12 px-4">
+        Order - {productName}
       </h3>
 
       <div className="card max-w-5xl mx-auto md:card-side bg-base-100 shadow-xl">
         <figure>
           <img className="p-4" src={img} alt="Product" />
         </figure>
-        <div className="card-body flex items-center justify-center">
-          <h2 className="card-title">{productName}</h2>
-          <div className="card-actions items-center justify-around">
+        <div className="card-body flex items- justify-center">
+         <div className="px-4">
+         <h2 className="card-title text-left mb-4">{productName}</h2>
+          <p>{des}</p>
+         </div>
+          <div className="card-actions items-center gap-4 px-4 mt-10">
             <div>
               <p>
                 Price: ${price}

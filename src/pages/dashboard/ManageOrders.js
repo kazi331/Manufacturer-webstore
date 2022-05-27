@@ -40,12 +40,12 @@ const ManageOrders = () => {
           })
           .then((res) => {
             if (res.data.deletedCount) {
+              Swal.fire("Deleted!", "The order has been deleted.", "success");
               axios
                 .get(`https://manufacturer-website-ks.herokuapp.com/orders}`)
                 .then((res) => {
                   setOrders(res.data);
                 });
-              Swal.fire("Deleted!", "The order has been deleted.", "success");
             }
           });
       }

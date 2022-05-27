@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import About from "./pages/about/About";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Footer from "./shared/Footer";
@@ -20,6 +19,8 @@ import Purchase from "./pages/purchase/Purchase";
 import ManageOrders from "./pages/dashboard/ManageOrders";
 import Users from "./pages/dashboard/Users";
 import Portfolio from "./pages/portfolio/Portfolio";
+import ManageProducts from "./pages/dashboard/ManageProducts";
+import Blog from "./pages/blog/Blog";
 
 function App() {
   return (
@@ -28,13 +29,16 @@ function App() {
     <div className="container mx-auto">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/products" element={<AllProducts />} />
-        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/portfolio" element={<Portfolio />} > 
+          <Route path="" />
+        </Route>
         <Route path="/purchase/:pId"element={ <Protected> <Purchase /></Protected> }/>
         <Route path="/dashboard"element={ <Protected> <Dashboard /></Protected> }> 
           <Route index element={ <MyOrders/>} />
           <Route path="/dashboard/orders" element={ <ManageOrders/>} />
+          <Route path="/dashboard/products" element={ <ManageProducts/>} />
           <Route path="/dashboard/reviews" element={ <ManageReviews/>} />
           <Route path="/dashboard/users" element={ <Users/>} />
           <Route path="/dashboard/user-profile" element={ <UserProfile/>} />
