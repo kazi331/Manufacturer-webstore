@@ -3,52 +3,66 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import Loader from "../../shared/Loader";
+import ProductLoader from "../../shared/svgIcon/ProductLoader";
 
 const ManageProducts = () => {
-  const { data:products, isLoading, refetch, error } = useQuery("products", () =>
-    fetch("http://localhost:5000/products").then(
+  const {
+    data: products,
+    isLoading,
+    refetch,
+    error,
+  } = useQuery("products", () =>
+    fetch("https://manufacturer-website-ks.herokuapp.com/products").then(
       (res) => res.json()
     )
   );
-  const {
-    register,
-    handleSubmit
-  } = useForm();
-  if (isLoading) return <Loader />;
+  const { register, handleSubmit } = useForm();
+  if (isLoading) return <ProductLoader />;
   if (error) console.log(error);
   const updateProduct = () => {
     console.log("update");
     refetch();
   };
 
-  const addProduct = (data,e) => {
-    const product = { ...data };
-    fetch("http://localhost:5000/product", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(product),
-    })
-      .then((res) => res.json())
-      .then((data) => {console.log(data)
-      if(data.acknowledged) {
-        e.target.reset();
+  const addProduct = (data, e) => {
+    // imgbb file manipulation
+    const formData = new FormData();
+    formData.append('image', data?.img[0])
+    const link = `https://api.imgbb.com/1/upload?key=3101e939fc0da0dff8ff9abf4fe236fd`;
+    fetch(link, { method: 'post', body: formData }).then(res => res.json()).then(result => {
+      if (result.data.display_url) { 
+        const img = result.data.display_url
+        const product = { ...data, img }
+
+        fetch("https://manufacturer-website-ks.herokuapp.com/product", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(product),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+              e.target.reset();
+            }
+          });
       }
-      });
+    });
   };
 
   // delete product
   const deleteProduct = (id) => {
-    const confirm = window.confirm('Are You Sure to delete ? ')
-    if(confirm){
-      axios.delete(`http://localhost:5000/product/${id}`).then((res) => {
-        console.log(res.data);
-        if (res.data.deletedCount) refetch();
-      }
-      );
+    const confirm = window.confirm("Are You Sure to delete ? ");
+    if (confirm) {
+      axios
+        .delete(`https://manufacturer-website-ks.herokuapp.com/product/${id}`)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount) refetch();
+        });
     }
   };
 
-  products.reverse();
 
   return (
     <div>
@@ -57,7 +71,7 @@ const ManageProducts = () => {
           Manage Products : {products?.length}
         </h3>
         <label htmlFor="add-product-modal" className="btn btn-sm btn-success">
-          Add Product
+          Add New Product
         </label>
       </div>
       {/* add new product modal */}
@@ -79,7 +93,7 @@ const ManageProducts = () => {
               ✕
             </label>
             <h3 className="font-bold text-lg">Add New Product</h3>
-            {/* form  */}
+            {/* add product form */}
             <form
               onSubmit={handleSubmit(addProduct)}
               className="flex flex-col gap-3 items-center justify-center w-full max-w-md mx-auto my-4"
@@ -110,11 +124,16 @@ const ManageProducts = () => {
                   className="input input-bordered w-full"
                 />
               </div>
-              <input
+              {/* <input
                 {...register("img", { required: true })}
                 type="text"
                 placeholder="Product image url"
                 className="input input-bordered w-full"
+              /> */}
+              <input
+                {...register("img", { required: true })}
+                type="file"
+                className="input w-full"
               />
               <textarea
                 {...register("des", { required: true })}
@@ -148,7 +167,7 @@ const ManageProducts = () => {
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
+                      <div className="w-12 h-12">
                         <img src={p.img} alt="Avatar Tailwind CSS Component" />
                       </div>
                     </div>

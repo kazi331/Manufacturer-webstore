@@ -16,7 +16,7 @@ const SingleProducts = ({p}) => {
         <p>Price: ${p.price}<sub> /item</sub></p>
         <h2 className=""> {p.name}</h2>
         <div className="flex flex-wrap gap-3 justify-between items-center">
-          <Link to={`/purchase/${p._id}`} className="btn btn-sm btn-active text-white">Buy Now</Link>
+          <Link to={`/purchase/${p._id}`} className="btn btn-sm text-white">Buy Now</Link>
         </div>
       </div>
     </div>

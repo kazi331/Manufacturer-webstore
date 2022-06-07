@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <svg
+   <svg
       xmlns="http://www.w3.org/2000/svg"
       xlink="http://www.w3.org/1999/xlink"
       width="200px"
@@ -67,7 +67,7 @@ const Loader = () => {
           begin="-0.5s"
         ></animate>
       </circle>
-    </svg>
+    </svg> 
   );
 };
 export default Loader;

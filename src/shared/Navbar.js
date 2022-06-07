@@ -10,17 +10,17 @@ const navigate = useNavigate();
   // console.log(user);
   const menuItems = (
     <>
-      <li>
-        <Link to="/">Home</Link>
+      <li >
+        <Link className="active:bg-accent" to="/">Home</Link>
       </li>
-      <li>
-        <Link to="/products">All Products</Link>
+      <li >
+        <Link className="active:bg-accent" to="/products">All Products</Link>
       </li>
-      <li>
-        <Link to="/blog">Blog</Link>
+      <li >
+        <Link className="active:bg-accent" to="/blog">Blog</Link>
       </li>
-      <li>
-        <Link to="/portfolio">Me</Link>
+      <li >
+        <Link className="active:bg-accent" to="/portfolio">Me</Link>
       </li>
     </>
   );

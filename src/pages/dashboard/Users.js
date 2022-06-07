@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import Loader from "../../shared/Loader";
+import UserLoading from "../../shared/svgIcon/UserLoading";
 
 const Users = () => {
   const {
@@ -75,7 +76,7 @@ const Users = () => {
       }
     });
   };
-if(isLoading) return <Loader/>
+if(isLoading) return <UserLoading/>
 if(error) console.log(error);
   
   return (

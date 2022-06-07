@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import useReviews from "../../hooks/useReviews";
 import deleteicon from "../../images/icons/delete-bin-4-line.svg";
+import Delete from "../../shared/svgIcon/Delete";
 
 const ManageReviews = () => {
   const [reviews] = useReviews();
@@ -61,7 +62,7 @@ const ManageReviews = () => {
                     className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
                     onClick={() => deleteReview(review._id)}
                   >
-                    <img src={deleteicon} alt="" />
+                    <Delete/>
                   </button>
                 </td>
               </tr>

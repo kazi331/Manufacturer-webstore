@@ -21,6 +21,7 @@ import Users from "./pages/dashboard/Users";
 import Portfolio from "./pages/portfolio/Portfolio";
 import ManageProducts from "./pages/dashboard/ManageProducts";
 import Blog from "./pages/blog/Blog";
+import UserLoading from "./shared/svgIcon/UserLoading";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
     <div className="container mx-auto">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/userloading" element={<UserLoading />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/products" element={<AllProducts />} />
         <Route path="/portfolio" element={<Portfolio />} > 
