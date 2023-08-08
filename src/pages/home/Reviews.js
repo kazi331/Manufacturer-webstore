@@ -86,23 +86,23 @@ const SingleReview = ({ r }) => {
           ))}
         </div>
       </div>
-      <div className="card-body w-full">
-        <p className="text-gray-600 text-left">{r.review}</p>
+      <div className="card-body dark:bg-gray-700 dark:text-gray-200 w-full">
+        <p className="dark:text-gray-300 text-left">{r.review}</p>
         <div className="card-actions gap-4 justify-between items-center">
           <div className="flex gap-4 flex-wrap">
             {r.badge?.map((b, i) => (
               <div
                 key={i}
-                className="badge bg-green-100 text-green-500 border-green-600 gap-1 p-3 pl-2"
+                className="badge bg-green-100 dark:bg-transparent text-green-500 border-green-600 gap-1 p-3 pl-2"
               >
-                <span className="text-2xl bg-white rounded-full w-5 h-5 flex pb-1 items-center justify-center">
+                <span className="text-2xl bg-white dark:bg-gray-600 rounded-full w-5 h-5 flex pb-1 items-center justify-center">
                   +
                 </span>
                 {b}
               </div>
             ))}
           </div>
-          <div className="text-xs text-gray-500">added 2 months ago</div>
+          <div className="text-xs text-gray-500 dark:text-gray-300">added 2 months ago</div>
         </div>
       </div>
     </div>

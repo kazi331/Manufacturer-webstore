@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
-import Loader from "../../shared/Loader";
 import UserLoading from "../../shared/svgIcon/UserLoading";
 
 const Users = () => {
@@ -11,14 +10,14 @@ const Users = () => {
     refetch,
     error,
   } = useQuery("users", () =>
-    fetch("https://manufacturer-website-ks.herokuapp.com/users", {
+    fetch("http://localhost:5000/users", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
     }).then((res) => res.json())
   );
- 
+
   const makeAdmin = (email) => {
     Swal.fire({
       title: "Confirm Making this user an Admin?",
@@ -32,7 +31,7 @@ const Users = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://manufacturer-website-ks.herokuapp.com/admin/${email}`, {
+        fetch(`http://localhost:5000/admin/${email}`, {
           method: "PUT",
           headers: {
             authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -45,8 +44,7 @@ const Users = () => {
             if (data.modifiedCount) {
               refetch();
             }
-          }
-          );
+          });
       }
     });
   };
@@ -64,7 +62,7 @@ const Users = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://manufacturer-website-ks.herokuapp.com/user/${id}`, {
+        fetch(`http://localhost:5000/user/${id}`, {
           method: "Delete",
         })
           .then((res) => res.json())
@@ -76,9 +74,9 @@ const Users = () => {
       }
     });
   };
-if(isLoading) return <UserLoading/>
-if(error) console.log(error);
-  
+  if (isLoading) return <UserLoading />;
+  if (error) console.log(error);
+
   return (
     <div>
       <h3 className="text-center text-3xl mb-4">

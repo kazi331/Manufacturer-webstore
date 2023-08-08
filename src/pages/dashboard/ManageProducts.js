@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import Loader from "../../shared/Loader";
 import ProductLoader from "../../shared/svgIcon/ProductLoader";
 
 const ManageProducts = () => {
@@ -12,9 +11,7 @@ const ManageProducts = () => {
     refetch,
     error,
   } = useQuery("products", () =>
-    fetch("https://manufacturer-website-ks.herokuapp.com/products").then(
-      (res) => res.json()
-    )
+    fetch("http://localhost:5000/products").then((res) => res.json())
   );
   const { register, handleSubmit } = useForm();
   if (isLoading) return <ProductLoader />;
@@ -27,42 +24,41 @@ const ManageProducts = () => {
   const addProduct = (data, e) => {
     // imgbb file manipulation
     const formData = new FormData();
-    formData.append('image', data?.img[0])
+    formData.append("image", data?.img[0]);
     const link = `https://api.imgbb.com/1/upload?key=3101e939fc0da0dff8ff9abf4fe236fd`;
-    fetch(link, { method: 'post', body: formData }).then(res => res.json()).then(result => {
-      if (result.data.display_url) { 
-        const img = result.data.display_url
-        const product = { ...data, img }
+    fetch(link, { method: "post", body: formData })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.data.display_url) {
+          const img = result.data.display_url;
+          const product = { ...data, img };
 
-        fetch("https://manufacturer-website-ks.herokuapp.com/product", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(product),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.insertedId) {
-              e.target.reset();
-            }
-          });
-      }
-    });
+          fetch("http://localhost:5000/product", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.insertedId) {
+                e.target.reset();
+              }
+            });
+        }
+      });
   };
 
   // delete product
   const deleteProduct = (id) => {
     const confirm = window.confirm("Are You Sure to delete ? ");
     if (confirm) {
-      axios
-        .delete(`https://manufacturer-website-ks.herokuapp.com/product/${id}`)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.deletedCount) refetch();
-        });
+      axios.delete(`http://localhost:5000/product/${id}`).then((res) => {
+        console.log(res.data);
+        if (res.data.deletedCount) refetch();
+      });
     }
   };
-
 
   return (
     <div>
@@ -133,7 +129,7 @@ const ManageProducts = () => {
               <input
                 {...register("img", { required: true })}
                 type="file"
-                className="input w-full"
+                className="input input-bordered w-full"
               />
               <textarea
                 {...register("des", { required: true })}

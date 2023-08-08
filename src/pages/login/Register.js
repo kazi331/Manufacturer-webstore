@@ -122,7 +122,7 @@ useEffect(()=> {
         Register
       </h2>
       <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-12">
-        <div className="grid p-12 card shadow-lg  place-items-center border-t-2 border-t-primary">
+        <div className="grid p-12 card bg-gray-600/50 shadow-lg  place-items-center border-t-2 border-t-primary">
           {/* react hook form  */}
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 w-full">
             <label className="label">
@@ -196,7 +196,7 @@ useEffect(()=> {
           </form>
         </div>
         <div className="divider">Or, continue with</div>
-        <div className="grid h-28 card bg-gray-200 rounded-box place-items-center">
+        <div className="grid h-28 card bg-blue-400 rounded-box place-items-center">
           <SocialLogin />
         </div>
       </div>

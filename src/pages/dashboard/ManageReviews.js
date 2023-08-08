@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import useReviews from "../../hooks/useReviews";
-import deleteicon from "../../images/icons/delete-bin-4-line.svg";
 import Delete from "../../shared/svgIcon/Delete";
 
 const ManageReviews = () => {
@@ -12,13 +11,11 @@ const ManageReviews = () => {
   const deleteReview = (id) => {
     const proceed = window.confirm("Are you sure?");
     if (proceed) {
-      axios
-        .delete(`https://manufacturer-website-ks.herokuapp.com/review/${id}`)
-        .then((res) => {
-          if (res.data.acknowledged) {
-            toast.info("Review Deleted");
-          }
-        });
+      axios.delete(`http://localhost:5000/review/${id}`).then((res) => {
+        if (res.data.acknowledged) {
+          toast.info("Review Deleted");
+        }
+      });
     }
   };
   return (
@@ -62,7 +59,7 @@ const ManageReviews = () => {
                     className="w-10 h-10 flex items-center justify-center rounded-full bg-base-200"
                     onClick={() => deleteReview(review._id)}
                   >
-                    <Delete/>
+                    <Delete />
                   </button>
                 </td>
               </tr>

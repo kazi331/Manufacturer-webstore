@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SingleProducts = ({p}) => {
   // console.log(p.id);
   return (
-    <div className="card max-w-lg mx-auto bg-base-100 shadow hover:shadow-lg">
+    <div className="card max-w-lg mx-auto bg-slate-700 shadow hover:shadow-lg">
           <div className="card-actions justify-between p-2">
             <div className="badge badge-outline text-accent tooltip tooltip-accent tooltip-right" data-tip="Min order quantity">Min: {p.min_quan}</div>
             <div className="badge badge-outline text-accent tooltip tooltip-accent tooltip-left" data-tip="Available quantity">Av: {p.avail}</div>

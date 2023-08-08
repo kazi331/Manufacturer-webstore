@@ -18,10 +18,7 @@ const UserProfile = () => {
     if (error) await toast.error(error.message);
   };
   // const [updating, setUpdating] = useState(true);
-  const {
-    register,
-    handleSubmit
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   // const [profile, setProfile] = useState({});
 
   //  get profile
@@ -30,40 +27,27 @@ const UserProfile = () => {
     isLoading,
     refetch,
   } = useQuery("profile", () =>
-    fetch(
-      `https://manufacturer-website-ks.herokuapp.com/user/${user?.email}`
-    ).then((res) => res.json())
+    fetch(`http://localhost:5000/user/${user?.email}`).then((res) => res.json())
   );
   if (isLoading) return <Loader />;
-  const {
-    address,
-    bio,
-    education,
-    facebook,
-    linkedin,
-    profileName,
-  } = profile;
+  const { address, bio, education, facebook, linkedin, profileName } = profile;
 
   const onSubmit = (data) => {
     console.log(data);
-    fetch(
-      `https://manufacturer-website-ks.herokuapp.com/update/${user?.email}`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`http://localhost:5000/update/${user?.email}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         if (data.acknowledged) refetch();
       });
   };
-
 
   // let newEmail;
   // if (!user.email || !user.emailVerified) {

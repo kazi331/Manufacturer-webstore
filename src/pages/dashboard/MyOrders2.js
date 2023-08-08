@@ -10,29 +10,23 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    axios
-      .get(
-        `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`
-      )
-      .then((res) => {
-        setOrders(res.data);
-      });
+    axios.get(`http://localhost:5000/my-orders/${user?.email}`).then((res) => {
+      setOrders(res.data);
+    });
   }, [user?.email]);
 
   const deleteOrder = (id) => {
     const proceed = window.confirm("Are you sure to delete this item?");
     if (proceed) {
       axios
-        .delete(`https://manufacturer-website-ks.herokuapp.com/order/${id}`, {
+        .delete(`http://localhost:5000/order/${id}`, {
           method: "delete",
         })
         .then((res) => {
           if (res.data.deletedCount) {
             toast.warn("Order Deleted");
             axios
-              .get(
-                `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`
-              )
+              .get(`http://localhost:5000/my-orders/${user?.email}`)
               .then((res) => {
                 setOrders(res.data);
               });

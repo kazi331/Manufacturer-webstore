@@ -103,36 +103,69 @@ const Login = () => {
     );
   }
     return (
-        <div className='px-2'>
-            <h2 className='text-3xl text-center mt-4 font-bold '>Login </h2>
-             <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-12">
-                <div className="grid p-12 card shadow-lg  place-items-center border-t-2 border-t-primary">
-                    {/* react hook form  */}
-                    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 w-full">
-                        <label className="label">
-                            <span className="label-text">Your Email</span>
-                            <span className="label-text-alt text-red-400 text-sm"> {errors.email && "Email is Required *" }</span>
-                        </label>
-                        <input   {...register("email", {required: true})} autoComplete="Off"  placeholder="User email" defaultValue="bangladesh@gmail.com" className="input input-bordered w-full max-w-md"  />
-                        
-                        <label className="label">
-                            <span className="label-text">Your Password</span>
-                            <span className="label-text-alt text-red-400 text-sm"> {errors.password && "Password is Required *" }</span>
-                        </label>
-                        <input  {...register("password", { required: true })} placeholder="Passoword" type="password" defaultValue="bangladesh" className="input input-bordered w-full max-w-md" />
-                        <label className="label mt-4 mb-8">
-                            <span className="label-text">Don't have an account? <Link  className='link link-primary'to="/register">Register</Link></span>
-                            <span className="label-text">Forgot Password? <Link className='link link-primary' to="/reset">Reset</Link></span>
-                        </label>
-                        <button value="Login" className='btn btn-primary w-full'>{loading && spinner} Login </button>
-                    </form>
-                </div>
-                <div className="divider">Or, continue with</div>
-                <div className="grid h-28 card bg-gray-200 rounded-box place-items-center">
-                    <SocialLogin/>
-                </div>
-             </div>
+      <div className="px-2">
+        <h2 className="text-3xl text-center mt-4 font-bold ">Login </h2>
+        <div className="flex flex-col w-full max-w-lg mx-auto border-opacity-50 mt-12">
+          <div className="grid p-12 card bg-gray-600/50 shadow-lg  place-items-center border-t-2 border-t-primary">
+            {/* react hook form  */}
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="grid gap-2 w-full"
+            >
+              <label className="label">
+                <span className="label-text">Your Email</span>
+                <span className="label-text-alt text-red-400 text-sm">
+                  {" "}
+                  {errors.email && "Email is Required *"}
+                </span>
+              </label>
+              <input
+                {...register("email", { required: true })}
+                autoComplete="Off"
+                placeholder="User email"
+                defaultValue="bangladesh@gmail.com"
+                className="input input-bordered w-full max-w-md"
+              />
+
+              <label className="label">
+                <span className="label-text">Your Password</span>
+                <span className="label-text-alt text-red-400 text-sm">
+                  {" "}
+                  {errors.password && "Password is Required *"}
+                </span>
+              </label>
+              <input
+                {...register("password", { required: true })}
+                placeholder="Passoword"
+                type="password"
+                defaultValue="bangladesh"
+                className="input input-bordered w-full max-w-md"
+              />
+              <label className="label mt-4 mb-8">
+                <span className="label-text">
+                  Don't have an account?{" "}
+                  <Link className="link link-primary" to="/register">
+                    Register
+                  </Link>
+                </span>
+                <span className="label-text">
+                  Forgot Password?{" "}
+                  <Link className="link link-primary" to="/reset">
+                    Reset
+                  </Link>
+                </span>
+              </label>
+              <button value="Login" className="btn btn-primary w-full">
+                {loading && spinner} Login{" "}
+              </button>
+            </form>
+          </div>
+          <div className="divider">Or, continue with</div>
+          <div className="grid h-28 card bg-blue-400 rounded-box place-items-center">
+            <SocialLogin />
+          </div>
         </div>
+      </div>
     );
 };
 

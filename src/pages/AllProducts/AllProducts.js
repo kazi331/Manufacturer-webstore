@@ -4,9 +4,7 @@ import SingleProducts from "../home/SingleProducts";
 
 const AllProducts = () => {
   const { data: products, isLoading } = useQuery("products", () =>
-    fetch("https://manufacturer-website-ks.herokuapp.com/products").then(
-      (res) => res.json()
-    )
+    fetch("http://localhost:5000/products").then((res) => res.json())
   );
   //   products.length = 8;
   if (isLoading) {

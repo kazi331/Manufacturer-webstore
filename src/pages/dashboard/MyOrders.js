@@ -16,15 +16,12 @@ const MyOrders = () => {
     error,
     refetch,
   } = useQuery("available", () =>
-    fetch(
-      `https://manufacturer-website-ks.herokuapp.com/my-orders/${user?.email}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    ).then((res) => res.json())
+    fetch(`http://localhost:5000/my-orders/${user?.email}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }).then((res) => res.json())
   );
   if (isLoading) return <Loader />;
   if (error) console.log(error);
@@ -46,7 +43,7 @@ const MyOrders = () => {
       if (result.isConfirmed) {
         // main delete function
 
-        fetch(`https://manufacturer-website-ks.herokuapp.com/order/${id}`, {
+        fetch(`http://localhost:5000/order/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
